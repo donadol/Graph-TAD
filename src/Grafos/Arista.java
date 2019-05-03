@@ -6,6 +6,14 @@ public class Arista <T>  {
 	int costo;
 	
 	
+	
+	
+	public Arista(Vertice<T> origen, Vertice<T> destino, int costo) {
+		super();
+		this.origen = origen;
+		this.destino = destino;
+		this.costo = costo;
+	}
 	public Vertice<T> getOrigen() {
 		return origen;
 	}

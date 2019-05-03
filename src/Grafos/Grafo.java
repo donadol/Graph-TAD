@@ -9,7 +9,7 @@ public abstract class Grafo <T>{
 	
 	
 	
-	private int identificadorVertice;
+	protected int identificadorVertice;
 	Map <Integer, Vertice<T>> vertices;
 	
 	
@@ -23,11 +23,13 @@ public abstract class Grafo <T>{
 	public abstract int agregarVertice(T contenido);
 	public abstract int eliminarVertice(int identificador);
 	
-	public abstract void agregarArista (int origen, int destino, int costo);
-	public abstract void eliminarArista (int origen, int destino, int costo);
+	public abstract boolean agregarArista (int origen, int destino, int costo);
+	public abstract boolean eliminarArista (int origen, int destino);
 	
 	public abstract List<Vertice<T>> obtenerVecinos (int identificador);
 	public abstract List<Vertice<T>> obtenerVecinos (Vertice <T> vertice);
+	
+	
 		
 	
 	

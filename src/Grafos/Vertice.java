@@ -1,6 +1,8 @@
 package Grafos;
 
 public class Vertice <T>{
+	
+	
 	T contenido;
 	boolean marcado;
 	int identificador;
@@ -25,6 +27,7 @@ public class Vertice <T>{
 	public void setIdentificador(int identificador) {
 		this.identificador = identificador;
 	}
+
 	
 	
 }
