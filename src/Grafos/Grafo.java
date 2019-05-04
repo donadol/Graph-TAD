@@ -25,12 +25,12 @@ public abstract class Grafo <T>{
 	//Funcion que retorna todas las aristas de un grafo 
 	public abstract List<Arista<T>> obtenerAristas ();
 
-	//Funci�n que retorna el costo de una arista dado el origen y destino
+	//Función que retorna el costo de una arista dado el origen y destino
 	public abstract int obtenerCostoArista (int origen, int destino);
 	public abstract int obtenerCostoArista (Vertice <T> origen, Vertice <T> destino);
 
-	//Dijkstra: Permite encontrar el camino m�s corto de un vertice a todos los dem�s vertices
-	//Retorna: Un mapa donde cada con cada identificador del vertice, se puede obtener el vertice previo que sigue el camino m�s corto
+	//Dijkstra: Permite encontrar el camino más corto de un vertice a todos los demás vertices
+	//Retorna: Un mapa donde cada con cada identificador del vertice, se puede obtener el vertice previo que sigue el camino más corto
 
 	public Map<Integer, Vertice<T>> dijkstra (int inicio){
 		Vertice<T> v;
@@ -42,7 +42,7 @@ public abstract class Grafo <T>{
 		Map <Integer, Vertice<T>> previo = new HashMap <Integer, Vertice<T>>();
 		previo.put(inicio, null);
 
-		//El vertice de inicio tiene una distancia 0 (porque es �l mismo)
+		//El vertice de inicio tiene una distancia 0 (porque es él mismo)
 		vertices.get(inicio).setDistancia(0);		
 		vertices.get(inicio).setMarcado(true);	
 
@@ -79,7 +79,7 @@ public abstract class Grafo <T>{
 		Map <Integer, Vertice<T>> previo = new HashMap <Integer, Vertice<T>>();
 		previo.put(inicio, null);
 
-		//El vertice de inicio tiene una distancia 0 (porque es �l mismo)
+		//El vertice de inicio tiene una distancia 0 (porque es él mismo)
 		vertices.get(inicio).setDistancia(0);		
 		vertices.get(inicio).setMarcado(true);	
 
