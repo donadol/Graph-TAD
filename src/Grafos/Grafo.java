@@ -7,10 +7,12 @@ public abstract class Grafo <T>{
 	protected static int INF = Integer.MAX_VALUE;
 	protected int NumeroVertices;
 	Map <Integer, Vertice<T>> vertices;
+	List<Arista<T>> aristas;
 
 	public Grafo() {
 		this.NumeroVertices = 0;
 		vertices = new HashMap <Integer, Vertice<T>> ();
+		aristas = new ArrayList();
 	}
 
 	public abstract int agregarVertice(T contenido);
@@ -26,13 +28,13 @@ public abstract class Grafo <T>{
 	public abstract List<Arista<T>> obtenerAristas ();
 
 	//Función que retorna el costo de una arista dado el origen y destino
-	public abstract int obtenerCostoArista (int origen, int destino);
-	public abstract int obtenerCostoArista (Vertice <T> origen, Vertice <T> destino);
+	public abstract int obtenerCostoArista (int origen, int destino) throws LimiteException;
+	public abstract int obtenerCostoArista (Vertice <T> origen, Vertice <T> destino) throws LimiteException;
 
 	//Dijkstra: Permite encontrar el camino más corto de un vertice a todos los demás vertices
 	//Retorna: Un mapa donde cada con cada identificador del vertice, se puede obtener el vertice previo que sigue el camino más corto
 
-	public Map<Integer, Vertice<T>> dijkstra (int inicio){
+	public Map<Integer, Vertice<T>> dijkstra (int inicio) throws LimiteException{
 		Vertice<T> v;
 		//Reinicia los valores de distancia de cada uno de los vertices
 		reiniciarDistancias();
@@ -69,7 +71,7 @@ public abstract class Grafo <T>{
 	//es necesario meter todos los vertices!
 	//se inicia desde cualquier vertice
 
-	public Map<Integer, Vertice<T>> prim(int inicio){
+	public Map<Integer, Vertice<T>> prim(int inicio) throws LimiteException{
 		Vertice<T> v;
 		//Reinicia los valores de distancia de cada uno de los vertices
 		reiniciarDistancias();
