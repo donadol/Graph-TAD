@@ -1,13 +1,11 @@
 package Grafos;
 
-public class Arista <T>  {
+public class Arista <T> implements Comparable<Arista<T>>{
 	Vertice<T> origen;
 	Vertice<T> destino;
 	int costo;
 	
-	
-	
-	
+	public Arista() {}
 	public Arista(Vertice<T> origen, Vertice<T> destino, int costo) {
 		super();
 		this.origen = origen;
@@ -32,6 +30,7 @@ public class Arista <T>  {
 	public void setCosto(int costo) {
 		this.costo = costo;
 	}
-	
-	
+	public int compareTo(Arista<T> o) {
+		return this.costo-o.costo;
+	}
 }

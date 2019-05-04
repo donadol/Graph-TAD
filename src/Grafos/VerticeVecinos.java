@@ -4,22 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class VerticeVecinos<T> extends Vertice<T> {
-
 	private List<Arista <T>> vecinos;
 	
 	public VerticeVecinos() {
-		// TODO Auto-generated constructor stub
 		vecinos = new ArrayList<Arista<T>>();
 	}
-
 	public List<Arista<T>> getVecinos() {
 		return vecinos;
 	}
-
 	public void setVecinos(List<Arista<T>> vecinos) {
 		this.vecinos = vecinos;
 	}
-	
 	public Arista <T> buscarVecino(int idVecino) {
 		if(existeVecino(idVecino)) {
 			for(Arista <T> p : vecinos) {
@@ -29,7 +24,6 @@ public class VerticeVecinos<T> extends Vertice<T> {
 		}
 		return null;
 	}
-	
 	public boolean existeVecino(int idVecino) {
 		for(Arista <T> a : vecinos) {
 			if(a.getDestino().getIdentificador() == idVecino)
@@ -37,7 +31,6 @@ public class VerticeVecinos<T> extends Vertice<T> {
 		}
 		return false;
 	}
-	
 	public boolean agregarVecino(Arista<T> vecinoNuevo) {
 		
 		if(!existeVecino(vecinoNuevo.getDestino().getIdentificador())) {
@@ -47,7 +40,6 @@ public class VerticeVecinos<T> extends Vertice<T> {
 		return false;
 		
 	}
-	
 	public boolean eliminarVecino(int destino) {
 		
 		if(!existeVecino(destino)) {
@@ -57,7 +49,4 @@ public class VerticeVecinos<T> extends Vertice<T> {
 		return false;
 		
 	}
-	
-	
-
 }
