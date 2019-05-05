@@ -18,6 +18,10 @@ public class Taller3_Grafos {
 		grafo.agregarVertice("popo4");
 		grafo.agregarVertice("popoNorman");
 		
+		grafo.agregarArista(1, 2, 2);
+		grafo.agregarArista(2, 3, 1);
+		grafo.agregarArista(1, 4, 5);
+		
 		System.out.println(grafo.obtenerCostoArista(2, 3));
 	}
 
