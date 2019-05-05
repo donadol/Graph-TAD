@@ -144,22 +144,21 @@ public abstract class Grafo <T>{
 	// KruskalMST permite encontrar el árbol de recubrimiento minimo de un grafo utilizando el algoritmo de kruskal
 	// Retorna una lista con pertenencientes al árbol
 	public List<Arista<T>> KruskalMST() {
-		List<Arista<T>> results = new ArrayList<Arista<T>>(vertices.size());
+		List<Arista<T>> results = new ArrayList<Arista<T>>();
 		List<Arista<T>> aristas = obtenerAristas();
 		int e=0, i=0;
 		Collections.sort(aristas);
 		Subset subsets[] = new Subset[vertices.size()];
-		for(int v=0; v<vertices.size(); ++i) {
+		for(int v=0; v<vertices.size(); ++v) {
 			subsets[v] = new Subset(v,0);
 		}
 		while(e<vertices.size()-1) {
-			Arista<T> next = new Arista<T>();
-			next = aristas.get(i);
+			Arista<T> next = aristas.get(i);
 			i++;
-			int x = find(subsets, next.origen.getIdentificador());
-			int y = find(subsets, next.destino.getIdentificador());
+			int x = find(subsets, next.getOrigen().getIdentificador());
+			int y = find(subsets, next.getDestino().getIdentificador());
 			if(x!=y) {
-				results.set(e, next);
+				results.add(next);
 				union(subsets, x, y);
 				e++;
 			}	
