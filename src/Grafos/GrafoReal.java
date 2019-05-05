@@ -34,7 +34,7 @@ public class GrafoReal<T> extends Grafo<T>{
 
 
 		@Override
-		public int agregarVertice(T contenido, int i) {
+		public int agregarVertice(T contenido) {
 			
 			int idAntiguo = NumeroVertices;
 			VerticeVecinos<T> verticeNuevo = new VerticeVecinos<T>();
