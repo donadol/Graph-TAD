@@ -2,70 +2,53 @@ package Grafos;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public abstract class GrafoAristas<T> extends Grafo<T>{
 
+	private List<Arista<T>> aristas;
 	
 	public GrafoAristas() 
 	{
-		
+		super();
+		aristas = new ArrayList <Arista<T>>();
 	}
+
 	
-	public List<Arista<T>> obtenerAristas()
-	{
-		List<Arista<T>> aristasaux = new ArrayList<Arista<T>>();
-		for (int i = 0; i < vertices.size(); i++)
-		{
-			aristasaux.add(aristas.get(i));
+	public List<Arista<T>> obtenerAristas (){
+		
+		ArrayList<Arista<T>> listaSalida = new ArrayList<Arista<T>>();
+		for(Entry<Integer, Vertice<T>> entry : vertices.entrySet()) {
+			for(Arista<T> arista : entry.getValue().getVecinos()) {
+				listaSalida.add(arista);
+			}
 		}
-		return aristasaux;
+		
+		return listaSalida;
 	}
 	
 	
 	
-	public int obtenerCostoArista(int origen, int destino) throws LimiteException {
-		int costo=0;
-		if(origen>= vertices.size() || destino>= vertices.size())
-            throw new LimiteException("Te pasaste");
-		for(int i=0;i<aristas.size();i++)
-	       {
-	    	   
-	    		  if( aristas.get(i).getOrigen().getIdentificador()==origen) {
-	    			  for(int j=0;j<aristas.size();j++) {
-	    				  if(aristas.get(j).getDestino().getIdentificador()==destino) {
-	    					  costo=aristas.get(i).getCosto();
-	    					  
-	    				  }
-	    			  }
-	    		  }
-	    	   
-	       }
-		return costo;
-		
+	public int obtenerCostoArista (int origen, int destino) throws LimiteException{
+
+		for(Arista<T> a : obtenerAristas()) {
+			if(a.getOrigen().getIdentificador() == origen && a.getDestino().getIdentificador() == destino) {
+				return a.getCosto();
+			}
+		}
+		return INF;
 	}
 
-	
-	public int obtenerCostoArista (Vertice<T> origen, Vertice<T> destino) throws LimiteException
-	{
-		int costo=0;
-		if(origen.getIdentificador()>= vertices.size() || destino.getIdentificador()>= vertices.size())
-            throw new LimiteException("Te pasaste");
-		for(int i=0;i<aristas.size();i++)
-	       {
-	    	   
-	    		  if( aristas.get(i).getOrigen()==origen) {
-	    			  for(int j=0;j<aristas.size();j++) {
-	    				  if(aristas.get(j).getDestino()==destino) {
-	    					  costo=aristas.get(i).getCosto();
-	    					  
-	    				  }
-	    			  }
-	    		  }
-	    	   
-	       }
-		return costo;
-		
-	}
 
+	public int obtenerCostoArista (Vertice <T> origen, Vertice <T> destino) throws LimiteException{
+
+		for(Arista<T> a : obtenerAristas()) {
+			if(origen.getIdentificador() ==a.getOrigen().getIdentificador()  && destino.getIdentificador() ==a.getDestino().getIdentificador()) {
+				return a.getCosto();
+			}
+		}
+		return INF;
+	}
 
 }

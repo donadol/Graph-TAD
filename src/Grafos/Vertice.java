@@ -1,11 +1,15 @@
 package Grafos;
 
+import java.util.List;
+
 public class Vertice <T>{
 	private T contenido;
 	private boolean marcado;
 	private int identificador;
 	//Representa la distancia del vertice al vertice de destino en los algoritmos de Dijkstra y Prim
 	private int distancia;
+	//Representa la lista de aristas que tiene este vértice
+	private List<Arista <T>> vecinos;
 	
 	public Vertice(){}
 	public Vertice(T contenido, int id){
@@ -36,6 +40,10 @@ public class Vertice <T>{
 	}
 	public void setDistancia(int distancia) {
 		this.distancia = distancia;
+	}
+	public List<Arista<T>> getVecinos() {
+		// TODO Auto-generated method stub
+		return vecinos;
 	}
 }
 

@@ -7,12 +7,12 @@ public abstract class Grafo <T>{
 	protected static int INF = Integer.MAX_VALUE;
 	protected int NumeroVertices;
 	Map <Integer, Vertice<T>> vertices;
-	List<Arista<T>> aristas;
+	
 
 	public Grafo() {
 		this.NumeroVertices = 0;
 		vertices = new HashMap <Integer, Vertice<T>> ();
-		aristas = new ArrayList<Arista<T>>();
+		
 	}
 
 	public abstract int agregarVertice(T contenido);
