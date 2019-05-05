@@ -34,16 +34,23 @@ public class GrafoReal<T> extends Grafo<T>{
 
 
 		@Override
-		public int agregarVertice(T contenido) {
-			// TODO Auto-generated method stub
-			return 0;
+		public int agregarVertice(T contenido, int i) {
+			
+			int idAntiguo = NumeroVertices;
+			VerticeVecinos<T> verticeNuevo = new VerticeVecinos<T>();
+			if(vertices.put(NumeroVertices, verticeNuevo) == null) {
+				NumeroVertices++;
+				return idAntiguo;
+			}
+			return -1;	
 		}
-
 
 		@Override
 		public int eliminarVertice(int identificador) {
-			// TODO Auto-generated method stub
-			return 0;
+			if(vertices.remove(identificador) != null) 
+				return identificador;
+			else
+				return -1;
 		}
 
 

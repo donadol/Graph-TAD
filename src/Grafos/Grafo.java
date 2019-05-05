@@ -15,7 +15,7 @@ public abstract class Grafo <T>{
 		aristas = new ArrayList();
 	}
 
-	public abstract int agregarVertice(T contenido);
+	public abstract int agregarVertice(T contenido, int i);
 	public abstract int eliminarVertice(int identificador);
 
 	public abstract boolean agregarArista (int origen, int destino, int costo);
