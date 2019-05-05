@@ -11,9 +11,18 @@ public abstract class GrafoAristas<T> extends Grafo<T>{
 		
 	}
 	
-
-
-	@Override
+	public List<Arista<T>> obtenerAristas()
+	{
+		List<Arista<T>> aristasaux = new ArrayList<Arista<T>>();
+		for (int i = 0; i < vertices.size(); i++)
+		{
+			aristasaux.add(aristas.get(i));
+		}
+		return aristasaux;
+	}
+	
+	
+	
 	public int obtenerCostoArista(int origen, int destino) throws LimiteException {
 		int costo=0;
 		if(origen>= vertices.size() || destino>= vertices.size())
