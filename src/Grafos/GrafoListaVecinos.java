@@ -122,6 +122,23 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 			((VerticeVecinos<T>) entry.getValue()).imprimirVecinos();
 		}
 	}
+	
+	
+	//ESTAS SON LAS FUNCIONES QUE HACEN FALTA:
+	public Arista<T> obtenerArista (int origen, int destino){
+		return null;
+	}
+	public Arista<T> obtenerArista (Vertice<T> origen, Vertice<T> destino){
+		return null;
+	}
+	
+	
+	public List<Arista<T>> obtenerAristasVertice (int identificador){
+		return null;
+	}
+	public List<Arista<T>> obtenerAristasVertice (Vertice<T> vertice){
+		return null;
+	}
 
 	
 }
