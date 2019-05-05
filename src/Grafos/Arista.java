@@ -1,9 +1,9 @@
 package Grafos;
 
 public class Arista <T> implements Comparable<Arista<T>>{
-	Vertice<T> origen;
-	Vertice<T> destino;
-	int costo;
+	private Vertice<T> origen;
+	private Vertice<T> destino;
+	private int costo;
 	
 	public Arista() {}
 	public Arista(Vertice<T> origen, Vertice<T> destino, int costo) {
