@@ -8,11 +8,11 @@ import java.util.Map.Entry;
 
 public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 	
-	private Map <Integer, VerticeVecinos<T>> vertices;
+	
+	
 	public GrafoListaVecinos() {
 		super();
 		
-		vertices = new HashMap<Integer, VerticeVecinos<T>>();
 		// TODO Auto-generated constructor stub
 		
 	}
@@ -36,8 +36,8 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 			
 			valorRetorno = identificador;
 			vertices.remove(identificador);
-			for(Map.Entry<Integer,VerticeVecinos<T>> entry : vertices.entrySet()) {
-				entry.getValue().eliminarVecino(identificador);
+			for(Map.Entry<Integer,Vertice<T>> entry : vertices.entrySet()) {
+				((VerticeVecinos<T>) entry.getValue()).eliminarVecino(identificador);
 			}
 		}
 		return valorRetorno;
@@ -55,7 +55,7 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 	public boolean eliminarArista (int origen, int destino) {
 		
 		if(vertices.containsKey(origen) && vertices.containsKey(destino)) {
-			if(vertices.get(origen).existeVecino(destino)) {
+			if(((VerticeVecinos<T>) vertices.get(origen)).existeVecino(destino)) {
 				return ((VerticeVecinos<T>) vertices.get(origen)).eliminarVecino(destino);
 			}
 		}
@@ -74,9 +74,9 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 		
 		ArrayList <Vertice<T>> listaSalida = new ArrayList<Vertice<T>>();
 		
-		for(Entry<Integer, VerticeVecinos<T>> e : vertices.entrySet()) {
+		for(Entry<Integer, Vertice<T>> e : vertices.entrySet()) {
 			if(e.getValue().getIdentificador() == vertice.getIdentificador()) {
-				for(Arista<T> a : e.getValue().getVecinos()) {
+				for(Arista<T> a : ((VerticeVecinos<T>) e.getValue()).getVecinos()) {
 					listaSalida.add(a.getDestino());
 				}
 				break;
@@ -88,8 +88,8 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 	public List<Arista<T>> obtenerAristas (){
 		
 		ArrayList<Arista<T>> listaSalida = new ArrayList<Arista<T>>();
-		for(Map.Entry<Integer,VerticeVecinos<T>> entry : vertices.entrySet()) {
-			for(Arista<T> arista : entry.getValue().getVecinos()) {
+		for(Entry<Integer, Vertice<T>> entry : vertices.entrySet()) {
+			for(Arista<T> arista : ((VerticeVecinos<T>) entry.getValue()).getVecinos()) {
 				listaSalida.add(arista);
 			}
 		}
@@ -118,8 +118,10 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 	}
 	
 	public void imprimirGrafoTexto() {
-		for(Map.Entry<Integer,VerticeVecinos<T>> entry : vertices.entrySet()) {
-			entry.getValue().imprimirVecinos();
+		for(Entry<Integer, Vertice<T>> entry : vertices.entrySet()) {
+			((VerticeVecinos<T>) entry.getValue()).imprimirVecinos();
 		}
 	}
+
+	
 }

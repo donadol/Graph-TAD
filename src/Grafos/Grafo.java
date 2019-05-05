@@ -45,6 +45,7 @@ public abstract class Grafo <T>{
 		previo.put(inicio, null);
 
 		//El vertice de inicio tiene una distancia 0 (porque es él mismo)
+		System.out.println("TAMAÑO: "+vertices.size());
 		vertices.get(inicio).setDistancia(0);		
 		vertices.get(inicio).setMarcado(true);	
 
