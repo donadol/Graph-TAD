@@ -1,11 +1,18 @@
 package Grafos;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 public abstract class GrafoListaVecinos<T> extends Grafo<T>{
+	
+	private Map <Integer, VerticeVecinos<T>> vertices;
 	public GrafoListaVecinos() {
+		super();
+		
+		vertices = new HashMap<Integer, VerticeVecinos<T>>();
 		// TODO Auto-generated constructor stub
 		
 	}
@@ -13,17 +20,27 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 		
 		int idAntiguo = NumeroVertices;
 		VerticeVecinos<T> verticeNuevo = new VerticeVecinos<T>();
-		if(vertices.put(NumeroVertices, verticeNuevo) == null) {
+		verticeNuevo.setContenido(contenido);
+		verticeNuevo.setIdentificador(NumeroVertices);
+		vertices.put(NumeroVertices, verticeNuevo);
+		if(vertices.containsKey(NumeroVertices)) {
 			NumeroVertices++;
 			return idAntiguo;
 		}
 		return -1;	
 	}
 	public int eliminarVertice(int identificador) {
-		if(vertices.remove(identificador) != null) 
-			return identificador;
-		else
-			return -1;
+		
+		int valorRetorno = -1;
+		if(vertices.containsKey(identificador)) {
+			
+			valorRetorno = identificador;
+			vertices.remove(identificador);
+			for(Map.Entry<Integer,VerticeVecinos<T>> entry : vertices.entrySet()) {
+				entry.getValue().eliminarVecino(identificador);
+			}
+		}
+		return valorRetorno;
 	}
 	public boolean agregarArista (int origen, int destino, int costo) {
 		
@@ -38,7 +55,9 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 	public boolean eliminarArista (int origen, int destino) {
 		
 		if(vertices.containsKey(origen) && vertices.containsKey(destino)) {
-			return ((VerticeVecinos<T>) vertices.get(origen)).eliminarVecino(destino);
+			if(vertices.get(origen).existeVecino(destino)) {
+				return ((VerticeVecinos<T>) vertices.get(origen)).eliminarVecino(destino);
+			}
 		}
 		
 		return false;
@@ -55,11 +74,52 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 		
 		ArrayList <Vertice<T>> listaSalida = new ArrayList<Vertice<T>>();
 		
-		for(Map.Entry<Integer, Vertice<T>> e : vertices.entrySet()) {
-			for(Arista<T> a : ((VerticeVecinos<T>) vertices.get(vertice)).getVecinos()) {
-				listaSalida.add(a.getDestino());
+		for(Entry<Integer, VerticeVecinos<T>> e : vertices.entrySet()) {
+			if(e.getValue().getIdentificador() == vertice.getIdentificador()) {
+				for(Arista<T> a : e.getValue().getVecinos()) {
+					listaSalida.add(a.getDestino());
+				}
+				break;
 			}
 		}
 		return listaSalida;
+	}
+	
+	public List<Arista<T>> obtenerAristas (){
+		
+		ArrayList<Arista<T>> listaSalida = new ArrayList<Arista<T>>();
+		for(Map.Entry<Integer,VerticeVecinos<T>> entry : vertices.entrySet()) {
+			for(Arista<T> arista : entry.getValue().getVecinos()) {
+				listaSalida.add(arista);
+			}
+		}
+		
+		return listaSalida;
+	}
+	
+	
+	public int obtenerCostoArista (int origen, int destino) throws LimiteException{
+		
+		for(Arista<T> a : obtenerAristas()) {
+			if(a.getOrigen().getIdentificador() == origen && a.getDestino().getIdentificador() == destino) {
+				return a.getCosto();
+			}
+		}
+		return INF;
+	}
+	public int obtenerCostoArista (Vertice <T> origen, Vertice <T> destino) throws LimiteException{
+		
+		for(Arista<T> a : obtenerAristas()) {
+			if(origen.getIdentificador() ==a.getOrigen().getIdentificador()  && destino.getIdentificador() ==a.getDestino().getIdentificador()) {
+				return a.getCosto();
+			}
+		}
+		return INF;
+	}
+	
+	public void imprimirGrafoTexto() {
+		for(Map.Entry<Integer,VerticeVecinos<T>> entry : vertices.entrySet()) {
+			entry.getValue().imprimirVecinos();
+		}
 	}
 }

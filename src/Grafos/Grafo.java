@@ -12,7 +12,7 @@ public abstract class Grafo <T>{
 	public Grafo() {
 		this.NumeroVertices = 0;
 		vertices = new HashMap <Integer, Vertice<T>> ();
-		aristas = new ArrayList();
+		aristas = new ArrayList<Arista<T>>();
 	}
 
 	public abstract int agregarVertice(T contenido);
