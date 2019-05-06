@@ -143,6 +143,34 @@ public class GrafoReal<T> extends Grafo<T>{
 		}
 
 
+		@Override
+		public Arista<T> obtenerArista(int origen, int destino) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
+		@Override
+		public Arista<T> obtenerArista(Vertice<T> origen, Vertice<T> destino) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
+		@Override
+		public List<Arista<T>> obtenerAristasVertice(int identificador) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
+		@Override
+		public List<Arista<T>> obtenerAristasVertice(Vertice<T> vertice) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+
 
 
 

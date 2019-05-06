@@ -126,18 +126,44 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 	
 	//ESTAS SON LAS FUNCIONES QUE HACEN FALTA:
 	public Arista<T> obtenerArista (int origen, int destino){
+		
+		for(Entry<Integer, Vertice<T>> entry : vertices.entrySet()) {
+			
+			if(entry.getValue().getIdentificador() == origen) {
+				for(Arista<T> arista : ((VerticeVecinos<T>) entry.getValue()).getVecinos()) {
+					if(arista.getDestino().getIdentificador() == destino) {
+						return arista;
+					}
+				}
+				break;
+			}
+		}
+		
 		return null;
+
 	}
 	public Arista<T> obtenerArista (Vertice<T> origen, Vertice<T> destino){
-		return null;
+		
+		return obtenerArista(origen.getIdentificador(), destino.getIdentificador() );
 	}
 	
 	
 	public List<Arista<T>> obtenerAristasVertice (int identificador){
-		return null;
+		
+		ArrayList<Arista<T>> listaSalida = new ArrayList<Arista<T>>();
+		for(Entry<Integer, Vertice<T>> entry : vertices.entrySet()) {
+			if(entry.getValue().getIdentificador() == identificador) {
+				for(Arista<T> arista : ((VerticeVecinos<T>) entry.getValue()).getVecinos()) {
+					listaSalida.add(arista);
+				}
+				break;
+			}
+		}
+		return listaSalida;
 	}
 	public List<Arista<T>> obtenerAristasVertice (Vertice<T> vertice){
-		return null;
+		
+		return obtenerAristasVertice(vertice.getIdentificador());
 	}
 
 	

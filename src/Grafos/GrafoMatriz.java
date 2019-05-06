@@ -206,5 +206,40 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 			i++;
 		}
 	}
+	
+	public Arista<T> obtenerArista (int origen, int destino){
+		
+		ArrayList<Arista<T>> listaAux = new ArrayList<Arista<T>>();
+		listaAux = (ArrayList<Arista<T>>) obtenerAristas();
+		for(Arista<T> a : listaAux) {
+			if(a.getOrigen().getIdentificador() == origen && a.getDestino().getIdentificador() == destino) {
+				return a;
+			}
+		}
+		return null;
+
+	}
+	public Arista<T> obtenerArista (Vertice<T> origen, Vertice<T> destino){
+		
+		return obtenerArista(origen.getIdentificador(), destino.getIdentificador() );
+	}
+	
+	
+	public List<Arista<T>> obtenerAristasVertice (int identificador){
+		
+		ArrayList<Arista<T>> listaAux = new ArrayList<Arista<T>>();
+		ArrayList<Arista<T>> listaSalida = new ArrayList<Arista<T>>();
+		listaAux = (ArrayList<Arista<T>>) obtenerAristas();
+		for(Arista<T> a : listaAux) {
+			if(a.getOrigen().getIdentificador() == identificador) {
+				listaSalida.add(a);
+			}
+		}
+		return listaSalida;
+	}
+	public List<Arista<T>> obtenerAristasVertice (Vertice<T> vertice){
+		
+		return obtenerAristasVertice(vertice.getIdentificador());
+	}
 
 }

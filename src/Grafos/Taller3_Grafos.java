@@ -33,10 +33,14 @@ public class Taller3_Grafos {
 		for(Vertice<String> v : g.obtenerVecinos(2)) {
 			System.out.println(v.getContenido());
 		}
+		System.out.println("-------ddd--------");
 		for(Arista<String> v : g.obtenerAristas()) {
 			System.out.println(v.getCosto());
 		}
-
+		if(g.obtenerArista(0,1) != null)
+				System.out.println(g.obtenerArista(1,2).getCosto()+" "+ g.obtenerArista(1,2).getOrigen().getIdentificador()+" "+g.obtenerArista(1,2).getDestino().getIdentificador());
+		else
+			System.out.println("-------pop--------");
 
 
 		//IMAGEN GRAFO: https://www.geeksforgeeks.org/wp-content/uploads/Fig-11.jpg
