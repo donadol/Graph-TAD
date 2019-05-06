@@ -117,7 +117,7 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 		return INF;
 	}
 	
-	public void imprimirGrafoTexto() {
+	public void imprimirGrafo() {
 		for(Entry<Integer, Vertice<T>> entry : vertices.entrySet()) {
 			((VerticeVecinos<T>) entry.getValue()).imprimirVecinos();
 		}
