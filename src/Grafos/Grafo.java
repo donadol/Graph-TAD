@@ -210,4 +210,6 @@ public abstract class Grafo <T>{
 		}
 		return results;
 	}
+	
+	public abstract void imprimirGrafo();
 }
