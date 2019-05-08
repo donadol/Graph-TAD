@@ -40,6 +40,18 @@ public class Taller3_Grafos {
 		else
 			System.out.println("No hay vertice que conecte a todos ");
 		System.out.println("---------------------");
+		
+		System.out.println("-------punto 5--------");
+		
+		ArrayList<Vertice<String>> subSet = new ArrayList<Vertice<String>> ();
+		subSet = (ArrayList<Vertice<String>>) g.obtenerVecinos(2);
+		ArrayList<Arista<String>> arbol = new ArrayList<Arista<String>> ();
+		arbol = (ArrayList<Arista<String>>) g.KruskalMST();
+		for(Arista<String> a : arbol) {
+			System.out.println("Origen: " + a.getOrigen().getIdentificador()  + " Costo: "+ a.getCosto()+ " Destino: "+a.getDestino().getIdentificador());
+		}
+		
+		System.out.println("---------------------");
 
 
 		//IMAGEN GRAFO: https://www.geeksforgeeks.org/wp-content/uploads/Fig-11.jpg
@@ -99,17 +111,7 @@ public class Taller3_Grafos {
 		grafoPrueba.agregarArista(8, 6, 6);
 		grafoPrueba.agregarArista(8, 2, 2);
 
-		System.out.println("-------FloydWarshall--------");
-		grafoPrueba.FloydWarshall();
-		System.out.println("-------BellmanFord--------");
-		for(int i = 0; i < 9; i++)
-			System.out.println("valor "+ i + " es de " +grafoPrueba.BellmanFord(1)[i]);
-		System.out.println("-------punto 4--------");
-		if(grafoPrueba.existeAlgunVerticeConectadoATodos() != null)
-			System.out.println("id del vertice que conecte a todos: " + grafoPrueba.existeAlgunVerticeConectadoATodos().getIdentificador() + " contenido: "+ grafoPrueba.existeAlgunVerticeConectadoATodos().getContenido() );
-		else
-			System.out.println("No hay vertice que conecte a todos ");
-		System.out.println("---------------------");
+
 
 
 		//IMAGEN RESULTADO DIJKSTRA: https://www.geeksforgeeks.org/wp-content/uploads/DIJ5.jpg

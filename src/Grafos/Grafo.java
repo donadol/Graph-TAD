@@ -375,11 +375,50 @@ public abstract class Grafo <T>{
 			return null;
 	}
 	
-	public Vertice<T> arbolDeMinimaExpancionConVerticesHojas(ArrayList<Vertice<T>> subSet){
+	//arbolDeMinimaExpancionConVerticesHojas sirve para armar un MST cuyas ojas deben contener unos vertices indicados prevaimente
+	public List<Arista<T>> arbolDeMinimaExpancionConVerticesHojas(ArrayList<Vertice<T>> subSet){
 		
-		
-		return null;
+		ArrayList<Arista<T>> aristas = new ArrayList<Arista<T>>();
+		ArrayList<Arista<T>> aristas2 = new ArrayList<Arista<T>>();
+		aristas = (ArrayList<Arista<T>>) obtenerAristas();
+		aristas2 = (ArrayList<Arista<T>>) obtenerAristas();
+		for(Arista<T> a : aristas) {
+			if(existeVerticeEnSubset(a.getOrigen().getIdentificador(), subSet)) {
+				aristas2.remove(a);
+			}
+		}
+		return MST(aristas2);
 	}	
+	
+	
+	public List<Arista<T>> MST(List<Arista<T>> aristas) {
+		List<Arista<T>> results = new ArrayList<Arista<T>>();
+		int e=0, i=0;
+		Collections.sort(aristas);
+		Subset subsets[] = new Subset[vertices.size()];
+		for(int v=0; v<vertices.size(); ++v) {
+			subsets[v] = new Subset(v,0);
+		}
+		while(e<vertices.size()-1) {
+			Arista<T> next = aristas.get(i);
+			i++;
+			int x = find(subsets, next.getOrigen().getIdentificador());
+			int y = find(subsets, next.getDestino().getIdentificador());
+			if(x!=y) {
+				results.add(next);
+				union(subsets, x, y);
+				e++;
+			}	
+		}
+		return results;
+	}
+	public boolean existeVerticeEnSubset(int indicadorABuscar, ArrayList<Vertice<T>> subSet){
+		for(Vertice<T> v : subSet) {
+			if(indicadorABuscar == v.getIdentificador())
+				return true;	
+		}
+		return false;
+	}
 
 	//imprimirGrafo imprime el grafo para poder verlo deuna forma mas visual
 	public void imprimirGrafo() {
