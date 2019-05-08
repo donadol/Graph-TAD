@@ -2,7 +2,6 @@ package Grafos;
 
 import java.util.List;
 
-import Grafo.Nodo;
 
 public class GrafoDFS {
 
@@ -13,8 +12,8 @@ public class GrafoDFS {
 	public void DFS(Vertice v, List<Vertice> nueva) {
 		if (!nueva.contains(v)) {
 			nueva.add(v);
-			for (int i = 0; i < v.getVertice().size(); i++) {
-				Vertice a = v.getVertice().get(i);
+			for (int i = 0; i < v.getVecinos().size(); i++) {
+				Vertice a = v.getContenido(i);//Corregir para buscar la forma de obtener al vertice en pos i
 				if (!nueva.contains(a)) {
 					DFS(a, nueva);
 				}

@@ -20,8 +20,9 @@ public class GrafoBFS {
         while (cola.size() != 0){
             s = cola.poll();
             System.out.print(s+" ");
+            //Corregir para buscar forma de recorrer ciclo
             for (Vertice nodo : this.getVertice()){
-                int n =  Integer.parseInt(nodo.getNombre());
+                int n =  Integer.parseInt((String) nodo.getContenido());
                 if (!visitados[n]){
                     visitados[n] = true;
                     cola.add(n);
