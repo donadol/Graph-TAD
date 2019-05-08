@@ -8,12 +8,12 @@ public abstract class Grafo <T>{
 	protected static int INF = Integer.MAX_VALUE;
 	protected int NumeroVertices;
 	Map <Integer, Vertice<T>> vertices;
-	
+
 
 	public Grafo() {
 		this.NumeroVertices = 0;
 		vertices = new HashMap <Integer, Vertice<T>> ();
-		
+
 	}
 
 	public abstract int agregarVertice(T contenido);
@@ -31,19 +31,59 @@ public abstract class Grafo <T>{
 	//Función que retorna el costo de una arista dado el origen y destino
 	public abstract int obtenerCostoArista (int origen, int destino) throws LimiteException;
 	public abstract int obtenerCostoArista (Vertice <T> origen, Vertice <T> destino) throws LimiteException;
-	
-	
+
+
 	//Función que dados dos vertices retorna una arista entre ellos
 	//Puede retornar nulo si la arista entre los dos vertices no existe
 	public abstract Arista<T> obtenerArista (int origen, int destino);
 	public abstract Arista<T> obtenerArista (Vertice<T> origen, Vertice<T> destino);
-	
-	
+
+
 	//Función que retorna la lista de aristas para un vertice dado
 	public abstract List<Arista<T>> obtenerAristasVertice (int identificador);
 	public abstract List<Arista<T>> obtenerAristasVertice (Vertice<T> vertice);
-	
-	
+
+	public Map<Integer, Vertice<T>> BFS(int s){
+		Vertice<T> v;
+		Map <Integer, Vertice<T>> mapa = new HashMap <Integer, Vertice<T>>();
+		reiniciarMarcas();
+		Queue<Vertice<T>> cola = new LinkedList<Vertice<T>>();
+		this.vertices.get(s).setMarcado(true);
+		cola.add(this.vertices.get(s));
+		while (cola.size() != 0){
+			v = cola.poll();
+			mapa.put(v.getIdentificador(), v);
+			for (Vertice<T> u : this.obtenerVecinos(v)){
+				if (!u.isMarcado()){
+					u.setMarcado(true);
+					cola.add(u);
+				}
+			}
+		}
+		return mapa;
+	}
+
+	public List<Vertice<T>> DFS(int s) {
+		Vertice<T> v;
+		this.reiniciarMarcas();
+		Stack<Vertice<T>> stack = new Stack<Vertice<T>>();
+		List<Vertice<T>> res = new ArrayList <Vertice<T>>();
+		stack.push(this.vertices.get(s));
+		while(!stack.empty()) {
+			v=stack.peek();
+			stack.pop();
+			if(!v.isMarcado()) {
+				res.add(v);
+				v.setMarcado(true);
+			}
+			for(Vertice<T> u: this.obtenerVecinos(v)) {
+				if (!u.isMarcado())
+					stack.push(u);
+			}
+		}
+		return res;
+	}
+
 	//Dijkstra: Permite encontrar el camino más corto de un vertice a todos los demás vertices
 	//Retorna: Un mapa donde cada con cada identificador del vertice, se puede obtener el vertice previo que sigue el camino más corto
 
@@ -58,7 +98,6 @@ public abstract class Grafo <T>{
 		previo.put(inicio, null);
 
 		//El vertice de inicio tiene una distancia 0 (porque es él mismo)
-		System.out.println("TAMAÑO: "+vertices.size());
 		vertices.get(inicio).setDistancia(0);		
 		vertices.get(inicio).setMarcado(true);	
 
@@ -72,7 +111,6 @@ public abstract class Grafo <T>{
 				if (!u.isMarcado()) {
 					if (u.getDistancia() > v.getDistancia() + obtenerCostoArista(v, u)) {
 						u.setDistancia(v.getDistancia() + obtenerCostoArista(v, u));
-
 						previo.put(u.getIdentificador(), v);
 						colaPrioridad.offer(u);
 					}
@@ -88,8 +126,7 @@ public abstract class Grafo <T>{
 	public List<Arista<T>> prim(int inicio) throws LimiteException{
 		List<Arista<T>> MST = new ArrayList<Arista<T>>();
 		Vertice<T> v;
-		
-		
+
 		//Reinicia los valores de distancia de cada uno de los vertices
 		reiniciarDistancias();
 		reiniciarMarcas();
@@ -101,10 +138,7 @@ public abstract class Grafo <T>{
 		//El vertice de inicio tiene una distancia 0 (porque es él mismo)	
 		vertices.get(inicio).setMarcado(true);	
 
-		
-		
 		//Se colocan las aristas del vertice de inicio
-		
 		PriorityQueue<Arista<T>> colaPrioridad = new PriorityQueue<Arista<T>>(vertices.size(), new ComparadorPrim<T> ());
 		Vertice <T> verticeInicio = vertices.get(inicio);
 		for (Vertice<T> u: obtenerVecinos (verticeInicio)) {
@@ -112,47 +146,32 @@ public abstract class Grafo <T>{
 			arista.setCosto(obtenerCostoArista(verticeInicio, u));
 			arista.setOrigen(verticeInicio);
 			arista.setDestino(u);
-			
 			colaPrioridad.offer(arista);
 		}
-		
-		
-		
-	 
+
 		Arista<T> aristaMST;
-		
-		
+
 		while (!colaPrioridad.isEmpty()) {
 			aristaMST = colaPrioridad.remove();
 			if (!aristaMST.getDestino().isMarcado()) {
 				MST.add (aristaMST);
 				aristaMST.getDestino().setMarcado(true);
-				
+
 				v = aristaMST.getDestino();
 				//v.setMarcado(true);
-				
+
 				for (Vertice<T> u: obtenerVecinos(v)) {
 					if (!u.isMarcado()) {
-						
-							
-							Arista<T> arista = new Arista<T>();
-							arista.setCosto(obtenerCostoArista(v, u));
-							arista.setOrigen(v);
-							arista.setDestino(u);
-										
-							colaPrioridad.offer(arista);
-						
+						Arista<T> arista = new Arista<T>();
+						arista.setCosto(obtenerCostoArista(v, u));
+						arista.setOrigen(v);
+						arista.setDestino(u);
+						colaPrioridad.offer(arista);
 					}
 				}
 			}
-			
-			
 		}	
 		return MST;
-	}
-
-	public void BFS (int identificador) {
-
 	}
 
 	public void reiniciarMarcas () {
@@ -186,7 +205,7 @@ public abstract class Grafo <T>{
 			s[xroot].rank++; 
 		}
 	}
-	
+
 	// KruskalMST permite encontrar el árbol de recubrimiento minimo de un grafo utilizando el algoritmo de kruskal
 	// Retorna una lista con pertenencientes al árbol
 	public List<Arista<T>> KruskalMST() {
@@ -212,17 +231,14 @@ public abstract class Grafo <T>{
 		return results;
 	}
 
-	
-	
 	public Double[][] FloydWarshall(){
-		
 		int n = vertices.size();
 		Double [][] c = new Double [n][n];
 		Double [][] matrizRetorno = new Double [n][n];
 		Arista<T> aristaAux = new Arista<T>();
 		int i = 0;
 		int j = 0;
-		
+
 		for(Entry<Integer, Vertice<T>> verticeOrigen : vertices.entrySet()) {
 			j = 0;
 			for(Entry<Integer, Vertice<T>> verticeDestino : vertices.entrySet()) {
@@ -238,7 +254,7 @@ public abstract class Grafo <T>{
 			}
 			i++;
 		}
-		
+
 		for( i = 0; i < n; i++) {
 			for( j = 0; j < n; j++) {
 				System.out.print(matrizRetorno[i][j]  +"    ");
@@ -247,75 +263,67 @@ public abstract class Grafo <T>{
 		}
 		System.out.print("\n");
 		System.out.print("\n");
-		
+
 		i = 0;
 		j = 0;
-		
+
 		for( i = 0; i < n; i ++)
 			for( j = 0; j < n; j ++)
 				c[i][j] = matrizRetorno[i][j];
-		
+
 		for(int k = 0; k < n; k ++)
 			for( i = 0; i < n; i ++)
 				for( j = 0; j < n; j ++)
 					c[i][j] = min( c[i][j], ( c[i][k] +  c[k][j]));
-				
-		
-		
+
 		for( i = 0; i < n; i++) {
 			for( j = 0; j < n; j++) {
 				System.out.print(c[i][j]  +"    ");
 			}
 			System.out.print("\n");
 		}
-		
-		
 		return c;
-		
 	}
-	public int[] BellmanFord(int verticeInicicial) 
-	    { 
-			ArrayList<Arista<T>> listaAristas = new ArrayList<Arista<T>>();
-			listaAristas = (ArrayList<Arista<T>>) obtenerAristas();
-	        int V = vertices.size();
-	        int E = listaAristas.size(); 
-	        int dist[] = new int[V];
-	        int posicionInicial = posVertice(verticeInicicial);
-	  
-	        for (int i = 0; i < V; i++) 
-	            dist[i] = INF;
-	        dist[posicionInicial] = 0; 
-	  
-	        for (int i = 1; i < V; i++) { 
-	            for (int j = 0; j < E; j++) { 
-	                int u = posVertice(listaAristas.get(j).getOrigen().getIdentificador()); 
-	                int v = posVertice(listaAristas.get(j).getDestino().getIdentificador()); 
-	                int weight = listaAristas.get(j).getCosto(); 
-	                if (dist[u] != INF && dist[u] + weight < dist[v]) 
-	                    dist[v] = dist[u] + weight; 
-	            } 
-	        } 
-	  
-	        for (int j = 0; j < E; j++) 
-	        { 
-	            int u = posVertice(listaAristas.get(j).getOrigen().getIdentificador()); 
-	            int v = posVertice(listaAristas.get(j).getDestino().getIdentificador()); 
-	            int weight = listaAristas.get(j).getCosto(); 
-	            if (dist[u] != INF &&  dist[u]+weight < dist[v]) 
-	              System.out.println("El grafo contine un ciclo de costo negativo!"); 
-	        } 
-	        return dist; 
-	    } 
-	
+	public int[] BellmanFord(int verticeInicicial) { 
+		ArrayList<Arista<T>> listaAristas = new ArrayList<Arista<T>>();
+		listaAristas = (ArrayList<Arista<T>>) obtenerAristas();
+		int V = vertices.size();
+		int E = listaAristas.size(); 
+		int dist[] = new int[V];
+		int posicionInicial = posVertice(verticeInicicial);
+
+		for (int i = 0; i < V; i++) 
+			dist[i] = INF;
+		dist[posicionInicial] = 0; 
+
+		for (int i = 1; i < V; i++) { 
+			for (int j = 0; j < E; j++) { 
+				int u = posVertice(listaAristas.get(j).getOrigen().getIdentificador()); 
+				int v = posVertice(listaAristas.get(j).getDestino().getIdentificador()); 
+				int weight = listaAristas.get(j).getCosto(); 
+				if (dist[u] != INF && dist[u] + weight < dist[v]) 
+					dist[v] = dist[u] + weight; 
+			} 
+		} 
+
+		for (int j = 0; j < E; j++) { 
+			int u = posVertice(listaAristas.get(j).getOrigen().getIdentificador()); 
+			int v = posVertice(listaAristas.get(j).getDestino().getIdentificador()); 
+			int weight = listaAristas.get(j).getCosto(); 
+			if (dist[u] != INF &&  dist[u]+weight < dist[v]) 
+				System.out.println("El grafo contine un ciclo de costo negativo!"); 
+		} 
+		return dist; 
+	} 
+
 	protected Double min(double a, double b) {
 		if(a >= b)
 			return  b;
 		else
 			return  a;	
 	}
-	
+
 	protected int posVertice(int identificador) {
-		
 		int i = 0;
 		for(Entry<Integer, Vertice<T>> entry : vertices.entrySet()) {
 			if(entry.getValue().getIdentificador() == identificador)
@@ -324,10 +332,8 @@ public abstract class Grafo <T>{
 		}
 		return -1;
 	}
-	
-	
-	public boolean existeConexionDirecta(int idVerticeA, int idVerticeB) {
 
+	public boolean existeConexionDirecta(int idVerticeA, int idVerticeB) {
 		if(existeVertice(idVerticeA) && existeVertice(idVerticeB)) {
 			for(Arista<T> a : obtenerAristasVertice(idVerticeA))
 				if(a.getDestino().getIdentificador() == idVerticeB)
@@ -336,13 +342,11 @@ public abstract class Grafo <T>{
 		return false;
 	}
 
-	
 	private Vertice<T> buscarNodo(int idVertice) {
 		return vertices.get(idVertice);
 	}
 
 	private boolean existeVertice(int idVertice) {
-		
 		if(vertices.get(idVertice) != null)
 			return true;
 		else
@@ -350,9 +354,8 @@ public abstract class Grafo <T>{
 	}
 
 	public boolean existeConexionDirectaOIndirecta(int idVerticeA, int idVerticeB) {
-		
 		boolean band = existeConexionDirecta(idVerticeA, idVerticeB);
-		
+
 		if(!band) {
 			if(existeVertice(idVerticeA) && existeVertice(idVerticeB)) {
 				ArrayList<Arista<T>> listaVecinosAux =  (ArrayList<Arista<T>>) obtenerAristasVertice(idVerticeA);
@@ -365,15 +368,13 @@ public abstract class Grafo <T>{
 			}
 		} else 
 			return true;
-		
+
 		reiniciarMarcas();
-		
+
 		return band;
 	}
-	
-	
+
 	public Vertice<T> existeAlgunVerticeConectadoATodos(){
-		
 		boolean band = true;
 		for (Vertice<T> v : vertices.values()) {
 			for (Vertice<T> v2 : vertices.values()) {

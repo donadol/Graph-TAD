@@ -42,8 +42,10 @@ public class Vertice <T>{
 		this.distancia = distancia;
 	}
 	public List<Arista<T>> getVecinos() {
-		// TODO Auto-generated method stub
 		return vecinos;
+	}
+	public void setVecinos(List<Arista<T>> vecinos) {
+		this.vecinos = vecinos;
 	}
 }
 

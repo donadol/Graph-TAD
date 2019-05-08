@@ -116,6 +116,7 @@ public class Taller3_Grafos {
 		System.out.println (resultadoDijkstra.get(5).getContenido());
 		pruebaKruskal(grafoPrueba);
 		pruebaPrim();
+		pruebaDFS();
 	}
 
 	static public void pruebaKruskal(Grafo<String> g) {
@@ -137,7 +138,6 @@ public class Taller3_Grafos {
 		grafoPrueba.agregarVertice("7"); //7
 		grafoPrueba.agregarVertice("8"); //8
 		
-		
 		grafoPrueba.agregarArista(0, 1, 4);
 		grafoPrueba.agregarArista(0, 7, 8);
 		
@@ -145,43 +145,35 @@ public class Taller3_Grafos {
 		grafoPrueba.agregarArista(1, 2, 8);
 		grafoPrueba.agregarArista(1, 7, 11);
 		
-		
 		grafoPrueba.agregarArista(2, 1, 8);
 		grafoPrueba.agregarArista(2, 5, 4);
 		grafoPrueba.agregarArista(2, 8, 2);
 		grafoPrueba.agregarArista(2, 3, 7);
 		
-		
 		grafoPrueba.agregarArista(3, 2, 7);
 		grafoPrueba.agregarArista(3, 4, 9);
 		grafoPrueba.agregarArista(3, 5, 14);
 		
-		
 		grafoPrueba.agregarArista(4, 3, 9);
 		grafoPrueba.agregarArista(4, 5, 10);
-		
 		
 		grafoPrueba.agregarArista(5, 3, 14);
 		grafoPrueba.agregarArista(5, 2, 4);
 		grafoPrueba.agregarArista(5, 4, 10);
 		grafoPrueba.agregarArista(5, 6, 2);
 		
-		
 		grafoPrueba.agregarArista(6, 7, 1);
 		grafoPrueba.agregarArista(6, 5, 2);
 		grafoPrueba.agregarArista(6, 8, 6);
-		
 		
 		grafoPrueba.agregarArista(7, 0, 8);
 		grafoPrueba.agregarArista(7, 1, 11);
 		grafoPrueba.agregarArista(7, 6, 1);
 		grafoPrueba.agregarArista(7, 8, 7);
 		
-		
 		grafoPrueba.agregarArista(8, 7, 7);
 		grafoPrueba.agregarArista(8, 6, 6);
 		grafoPrueba.agregarArista(8, 2, 2);
-		
 		
 		List<Arista<String>> resultadoPrim = grafoPrueba.prim(0);
 		System.out.println ("Tamaño: "+resultadoPrim.size());
@@ -189,7 +181,24 @@ public class Taller3_Grafos {
 			System.out.println ("Origen: "+ arista.getOrigen().getContenido() + "-- Destino: "+arista.getDestino().getContenido());
 			
 		}
-		
 	}
-
+	
+	static public void pruebaDFS() {
+		Grafo<String> g = new GrafosPrueba<String>();
+		g.agregarVertice("0");
+		g.agregarVertice("1");
+		g.agregarVertice("2"); //1
+		g.agregarVertice("3"); //2
+		g.agregarVertice("4"); //3
+		g.agregarArista(1, 0, 1);
+		g.agregarArista(0, 2, 1);
+		g.agregarArista(2, 1, 1);
+		g.agregarArista(0, 3, 1);
+		g.agregarArista(1, 4, 1);
+		
+		List<Vertice<String>> res = g.DFS(0);
+		for (Map.Entry<Integer,Vertice<String>> x : g.vertices.entrySet())  {
+			System.out.println(x.getKey()+"->"+x.getValue().getIdentificador());
+		}
+	}
 }

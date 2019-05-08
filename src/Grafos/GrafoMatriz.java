@@ -2,7 +2,6 @@ package Grafos;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
 public abstract class GrafoMatriz<T> extends Grafo<T>{
 
@@ -19,9 +18,7 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 		this.nodosVisitados = new ArrayList<Boolean>();
 	}
 	
-	public int agregarVertice(T contenido) {
-		
-		
+	public int agregarVertice(T contenido) {	
 		ArrayList<Integer> verticeAux = new ArrayList< Integer>();
 		for(int i = 0; i < matrizDeAdyacencia.size() + 1; i++)
 			verticeAux.add(INF);
