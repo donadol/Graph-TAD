@@ -1,6 +1,7 @@
 package Grafos;
 
 import java.util.*;
+import java.util.Map.Entry;
 
 public abstract class Grafo <T>{
 
@@ -118,7 +119,7 @@ public abstract class Grafo <T>{
 		
 		
 	 
-		Arista aristaMST;
+		Arista<T> aristaMST;
 		
 		
 		while (!colaPrioridad.isEmpty()) {
@@ -210,6 +211,186 @@ public abstract class Grafo <T>{
 		}
 		return results;
 	}
+
 	
+	
+	public Double[][] FloydWarshall(){
+		
+		int n = vertices.size();
+		Double [][] c = new Double [n][n];
+		Double [][] matrizRetorno = new Double [n][n];
+		Arista<T> aristaAux = new Arista<T>();
+		int i = 0;
+		int j = 0;
+		
+		for(Entry<Integer, Vertice<T>> verticeOrigen : vertices.entrySet()) {
+			j = 0;
+			for(Entry<Integer, Vertice<T>> verticeDestino : vertices.entrySet()) {
+				aristaAux = obtenerArista(verticeOrigen.getValue().getIdentificador(),verticeDestino.getValue().getIdentificador());
+				if(aristaAux != null) {
+					matrizRetorno[i][j] = (double) aristaAux.getCosto();
+				}else if(i == j) {
+					matrizRetorno[i][j] = (double) 0;
+				}else {
+					matrizRetorno[i][j] = (double) Double.POSITIVE_INFINITY;
+				}
+				j++;
+			}
+			i++;
+		}
+		
+		for( i = 0; i < n; i++) {
+			for( j = 0; j < n; j++) {
+				System.out.print(matrizRetorno[i][j]  +"    ");
+			}
+			System.out.print("\n");
+		}
+		System.out.print("\n");
+		System.out.print("\n");
+		
+		i = 0;
+		j = 0;
+		
+		for( i = 0; i < n; i ++)
+			for( j = 0; j < n; j ++)
+				c[i][j] = matrizRetorno[i][j];
+		
+		for(int k = 0; k < n; k ++)
+			for( i = 0; i < n; i ++)
+				for( j = 0; j < n; j ++)
+					c[i][j] = min( c[i][j], ( c[i][k] +  c[k][j]));
+				
+		
+		
+		for( i = 0; i < n; i++) {
+			for( j = 0; j < n; j++) {
+				System.out.print(c[i][j]  +"    ");
+			}
+			System.out.print("\n");
+		}
+		
+		
+		return c;
+		
+	}
+	public int[] BellmanFord(int verticeInicicial) 
+	    { 
+			ArrayList<Arista<T>> listaAristas = new ArrayList<Arista<T>>();
+			listaAristas = (ArrayList<Arista<T>>) obtenerAristas();
+	        int V = vertices.size();
+	        int E = listaAristas.size(); 
+	        int dist[] = new int[V];
+	        int posicionInicial = posVertice(verticeInicicial);
+	  
+	        for (int i = 0; i < V; i++) 
+	            dist[i] = INF;
+	        dist[posicionInicial] = 0; 
+	  
+	        for (int i = 1; i < V; i++) { 
+	            for (int j = 0; j < E; j++) { 
+	                int u = posVertice(listaAristas.get(j).getOrigen().getIdentificador()); 
+	                int v = posVertice(listaAristas.get(j).getDestino().getIdentificador()); 
+	                int weight = listaAristas.get(j).getCosto(); 
+	                if (dist[u] != INF && dist[u] + weight < dist[v]) 
+	                    dist[v] = dist[u] + weight; 
+	            } 
+	        } 
+	  
+	        for (int j = 0; j < E; j++) 
+	        { 
+	            int u = posVertice(listaAristas.get(j).getOrigen().getIdentificador()); 
+	            int v = posVertice(listaAristas.get(j).getDestino().getIdentificador()); 
+	            int weight = listaAristas.get(j).getCosto(); 
+	            if (dist[u] != INF &&  dist[u]+weight < dist[v]) 
+	              System.out.println("El grafo contine un ciclo de costo negativo!"); 
+	        } 
+	        return dist; 
+	    } 
+	
+	protected Double min(double a, double b) {
+		if(a >= b)
+			return  b;
+		else
+			return  a;	
+	}
+	
+	protected int posVertice(int identificador) {
+		
+		int i = 0;
+		for(Entry<Integer, Vertice<T>> entry : vertices.entrySet()) {
+			if(entry.getValue().getIdentificador() == identificador)
+				return i;
+			i++;
+		}
+		return -1;
+	}
+	
+	
+	public boolean existeConexionDirecta(int idVerticeA, int idVerticeB) {
+
+		if(existeVertice(idVerticeA) && existeVertice(idVerticeB)) {
+			for(Arista<T> a : obtenerAristasVertice(idVerticeA))
+				if(a.getDestino().getIdentificador() == idVerticeB)
+					return true;
+		}
+		return false;
+	}
+
+	
+	private Vertice<T> buscarNodo(int idVertice) {
+		return vertices.get(idVertice);
+	}
+
+	private boolean existeVertice(int idVertice) {
+		
+		if(vertices.get(idVertice) != null)
+			return true;
+		else
+			return false;
+	}
+
+	public boolean existeConexionDirectaOIndirecta(int idVerticeA, int idVerticeB) {
+		
+		boolean band = existeConexionDirecta(idVerticeA, idVerticeB);
+		
+		if(!band) {
+			if(existeVertice(idVerticeA) && existeVertice(idVerticeB)) {
+				ArrayList<Arista<T>> listaVecinosAux =  (ArrayList<Arista<T>>) obtenerAristasVertice(idVerticeA);
+				buscarNodo(idVerticeA).setMarcado(true);
+				for(Arista<T> p : listaVecinosAux) {
+					if(p.getDestino().isMarcado() == false) {
+						return existeConexionDirectaOIndirecta(p.getDestino().getIdentificador(), idVerticeB);
+					}
+				}
+			}
+		} else 
+			return true;
+		
+		reiniciarMarcas();
+		
+		return band;
+	}
+	
+	
+	public Vertice<T> existeAlgunVerticeConectadoATodos(){
+		
+		boolean band = true;
+		for (Vertice<T> v : vertices.values()) {
+			for (Vertice<T> v2 : vertices.values()) {
+				if(v.getIdentificador() != v2.getIdentificador()) {
+					band = band && existeConexionDirectaOIndirecta(v.getIdentificador(), v2.getIdentificador());
+					if(band == false) {
+						break;
+					}
+				}
+			}
+			if(band == true) {
+				return v;
+			}
+			band = true;
+		}
+		return null;
+	}
+
 	public abstract void imprimirGrafo();
 }

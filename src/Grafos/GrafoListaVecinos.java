@@ -165,6 +165,9 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 		
 		return obtenerAristasVertice(vertice.getIdentificador());
 	}
+	
+	
+	
 
 	
 }

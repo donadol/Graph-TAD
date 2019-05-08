@@ -18,29 +18,27 @@ public class Taller3_Grafos {
 		g.agregarVertice("2");
 		g.agregarVertice("3");
 
-		g.agregarArista(0,1,100);
-		g.agregarArista(1,2,16);
-		g.agregarArista(2,0,50);
-		g.agregarArista(2,3,1);
-		//g.imprimirGrafoTexto();
+		g.agregarArista(0,1,8);
+		g.agregarArista(1,2,36);
+		g.agregarArista(2,0,37);
+		g.agregarArista(3,2,67);
 
-		System.out.println("HOLA");
+		System.out.println("popo");
 		System.out.println(g.obtenerCostoArista(2, 2));
 		System.out.println(g.obtenerCostoArista(0, 1));
 		System.out.println("---------------");
 
-
-		for(Vertice<String> v : g.obtenerVecinos(2)) {
-			System.out.println(v.getContenido());
-		}
-		System.out.println("-------ddd--------");
-		for(Arista<String> v : g.obtenerAristas()) {
-			System.out.println(v.getCosto());
-		}
-		if(g.obtenerArista(0,1) != null)
-				System.out.println(g.obtenerArista(1,2).getCosto()+" "+ g.obtenerArista(1,2).getOrigen().getIdentificador()+" "+g.obtenerArista(1,2).getDestino().getIdentificador());
+		System.out.println("-------FloydWarshall--------");
+		g.FloydWarshall();
+		System.out.println("-------BellmanFord--------");
+		for(int i = 0; i < 4; i++)
+			System.out.println("valor "+ i + "es de " +g.BellmanFord(1)[i]);
+		System.out.println("-------punto 4--------");
+		if(g.existeAlgunVerticeConectadoATodos() != null)
+			System.out.println("id del vertice que conecte a todos: " + g.existeAlgunVerticeConectadoATodos().getIdentificador() + " contenido: "+ g.existeAlgunVerticeConectadoATodos().getContenido() );
 		else
-			System.out.println("-------pop--------");
+			System.out.println("No hay vertice que conecte a todos ");
+		System.out.println("---------------------");
 
 
 		//IMAGEN GRAFO: https://www.geeksforgeeks.org/wp-content/uploads/Fig-11.jpg
@@ -100,8 +98,17 @@ public class Taller3_Grafos {
 		grafoPrueba.agregarArista(8, 6, 6);
 		grafoPrueba.agregarArista(8, 2, 2);
 
-
-
+		System.out.println("-------FloydWarshall--------");
+		grafoPrueba.FloydWarshall();
+		System.out.println("-------BellmanFord--------");
+		for(int i = 0; i < 9; i++)
+			System.out.println("valor "+ i + " es de " +grafoPrueba.BellmanFord(1)[i]);
+		System.out.println("-------punto 4--------");
+		if(grafoPrueba.existeAlgunVerticeConectadoATodos() != null)
+			System.out.println("id del vertice que conecte a todos: " + grafoPrueba.existeAlgunVerticeConectadoATodos().getIdentificador() + " contenido: "+ grafoPrueba.existeAlgunVerticeConectadoATodos().getContenido() );
+		else
+			System.out.println("No hay vertice que conecte a todos ");
+		System.out.println("---------------------");
 
 
 		//IMAGEN RESULTADO DIJKSTRA: https://www.geeksforgeeks.org/wp-content/uploads/DIJ5.jpg
