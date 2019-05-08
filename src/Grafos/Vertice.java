@@ -1,5 +1,6 @@
 package Grafos;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class Vertice <T>{
@@ -10,6 +11,8 @@ public class Vertice <T>{
 	private int distancia;
 	//Representa la lista de aristas que tiene este vértice
 	private List<Arista <T>> vecinos;
+	
+	 private List<Vertice> menorDistancia = new LinkedList<>();
 	
 	public Vertice(){}
 	public Vertice(T contenido, int id){
@@ -44,6 +47,14 @@ public class Vertice <T>{
 	public List<Arista<T>> getVecinos() {
 		// TODO Auto-generated method stub
 		return vecinos;
+	}
+	
+	public List<Vertice> getMenorDistancia() {
+		return menorDistancia;
+	}
+
+	public void setMenorDistancia(List<Vertice> menorDistancia) {
+		this.menorDistancia = menorDistancia;
 	}
 }
 
