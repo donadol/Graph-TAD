@@ -22,7 +22,8 @@ public class Taller3_Grafos {
 		g.agregarArista(1,2,36);
 		g.agregarArista(2,0,37);
 		g.agregarArista(3,2,67);
-
+		
+		g.imprimirGrafo();
 		System.out.println("popo");
 		System.out.println(g.obtenerCostoArista(2, 2));
 		System.out.println(g.obtenerCostoArista(0, 1));

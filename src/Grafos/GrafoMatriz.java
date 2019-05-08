@@ -2,7 +2,6 @@ package Grafos;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map.Entry;
 
 public abstract class GrafoMatriz<T> extends Grafo<T>{
 
@@ -192,20 +191,6 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 		return -1;
 	}
 	
-	public  void imprimirGrafo() {
-		int i = 0;
-		for(ArrayList< Integer> n : matrizDeAdyacencia) {
-			System.out.print( "id " + identificadores.get(i)+ ":   ");
-			for(int m : n) {
-					System.out.print(m + "             ");
-				
-			}
-			System.out.print("\n");
-			System.out.print("\n");
-			System.out.print("\n");
-			i++;
-		}
-	}
 	
 	public Arista<T> obtenerArista (int origen, int destino){
 		

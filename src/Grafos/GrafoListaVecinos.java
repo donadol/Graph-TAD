@@ -1,7 +1,6 @@
 package Grafos;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -11,10 +10,7 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 	
 	
 	public GrafoListaVecinos() {
-		super();
-		
-		// TODO Auto-generated constructor stub
-		
+		super();		
 	}
 	public int agregarVertice(T contenido) {
 		
@@ -117,7 +113,7 @@ public abstract class GrafoListaVecinos<T> extends Grafo<T>{
 		return INF;
 	}
 	
-	public void imprimirGrafo() {
+	public void imprimirGrafoVecinos() {
 		for(Entry<Integer, Vertice<T>> entry : vertices.entrySet()) {
 			((VerticeVecinos<T>) entry.getValue()).imprimirVecinos();
 		}

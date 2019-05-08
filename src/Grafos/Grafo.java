@@ -188,7 +188,7 @@ public abstract class Grafo <T>{
 	}
 	
 	// KruskalMST permite encontrar el árbol de recubrimiento minimo de un grafo utilizando el algoritmo de kruskal
-	// Retorna una lista con pertenencientes al árbol
+	// Retorna una lista con aristas pertenencientes al árbol
 	public List<Arista<T>> KruskalMST() {
 		List<Arista<T>> results = new ArrayList<Arista<T>>();
 		List<Arista<T>> aristas = obtenerAristas();
@@ -212,8 +212,7 @@ public abstract class Grafo <T>{
 		return results;
 	}
 
-	
-	
+	// FloydWarshall permite obteneruna matriz con las minimas distancias entre todos los nodos
 	public Double[][] FloydWarshall(){
 		
 		int n = vertices.size();
@@ -239,14 +238,6 @@ public abstract class Grafo <T>{
 			i++;
 		}
 		
-		for( i = 0; i < n; i++) {
-			for( j = 0; j < n; j++) {
-				System.out.print(matrizRetorno[i][j]  +"    ");
-			}
-			System.out.print("\n");
-		}
-		System.out.print("\n");
-		System.out.print("\n");
 		
 		i = 0;
 		j = 0;
@@ -259,20 +250,12 @@ public abstract class Grafo <T>{
 			for( i = 0; i < n; i ++)
 				for( j = 0; j < n; j ++)
 					c[i][j] = min( c[i][j], ( c[i][k] +  c[k][j]));
-				
 		
-		
-		for( i = 0; i < n; i++) {
-			for( j = 0; j < n; j++) {
-				System.out.print(c[i][j]  +"    ");
-			}
-			System.out.print("\n");
-		}
-		
-		
-		return c;
-		
+		return c;	
 	}
+	
+	// BellmanFord permite obtener una lista de la distancia entreun vertice inicial y todos los demas
+	//Permite ademas realizar el calculo cuando hay aristas negativas e identificar ciclos negativos en el grafo
 	public int[] BellmanFord(int verticeInicicial) 
 	    { 
 			ArrayList<Arista<T>> listaAristas = new ArrayList<Arista<T>>();
@@ -307,6 +290,8 @@ public abstract class Grafo <T>{
 	        return dist; 
 	    } 
 	
+	
+	//min. Funcion auxiliar que retornael minimo entre dos numeros
 	protected Double min(double a, double b) {
 		if(a >= b)
 			return  b;
@@ -314,6 +299,7 @@ public abstract class Grafo <T>{
 			return  a;	
 	}
 	
+	//posVertice. Funcion auxiliar que dado un identificador, retorna su posicion en el maap de vertices
 	protected int posVertice(int identificador) {
 		
 		int i = 0;
@@ -325,7 +311,7 @@ public abstract class Grafo <T>{
 		return -1;
 	}
 	
-	
+	//existeConexionDirecta es una funcion que permite saber si dosvertices estan conectados directamente
 	public boolean existeConexionDirecta(int idVerticeA, int idVerticeB) {
 
 		if(existeVertice(idVerticeA) && existeVertice(idVerticeB)) {
@@ -336,11 +322,7 @@ public abstract class Grafo <T>{
 		return false;
 	}
 
-	
-	private Vertice<T> buscarNodo(int idVertice) {
-		return vertices.get(idVertice);
-	}
-
+	//existeVertice permite saber si un vertice existe o no en el grafo
 	private boolean existeVertice(int idVertice) {
 		
 		if(vertices.get(idVertice) != null)
@@ -349,6 +331,7 @@ public abstract class Grafo <T>{
 			return false;
 	}
 
+	//existeConexionDirecta es una funcion que permite saber si dosvertices estan conectados directa o indirectamente
 	public boolean existeConexionDirectaOIndirecta(int idVerticeA, int idVerticeB) {
 		
 		boolean band = existeConexionDirecta(idVerticeA, idVerticeB);
@@ -356,7 +339,7 @@ public abstract class Grafo <T>{
 		if(!band) {
 			if(existeVertice(idVerticeA) && existeVertice(idVerticeB)) {
 				ArrayList<Arista<T>> listaVecinosAux =  (ArrayList<Arista<T>>) obtenerAristasVertice(idVerticeA);
-				buscarNodo(idVerticeA).setMarcado(true);
+				vertices.get(idVerticeA).setMarcado(true);
 				for(Arista<T> p : listaVecinosAux) {
 					if(p.getDestino().isMarcado() == false) {
 						return existeConexionDirectaOIndirecta(p.getDestino().getIdentificador(), idVerticeB);
@@ -371,7 +354,7 @@ public abstract class Grafo <T>{
 		return band;
 	}
 	
-	
+	//existeAlgunVerticeConectadoATodos funcion permite saber si hay un vertice que conecte  todos los demas y lo retorna
 	public Vertice<T> existeAlgunVerticeConectadoATodos(){
 		
 		boolean band = true;
@@ -388,9 +371,57 @@ public abstract class Grafo <T>{
 				return v;
 			}
 			band = true;
-		}
-		return null;
+			}
+			return null;
 	}
+	
+	public Vertice<T> arbolDeMinimaExpancionConVerticesHojas(ArrayList<Vertice<T>> subSet){
+		
+		
+		return null;
+	}	
 
-	public abstract void imprimirGrafo();
+	//imprimirGrafo imprime el grafo para poder verlo deuna forma mas visual
+	public void imprimirGrafo() {
+		
+		ArrayList<Integer> identificadores = new ArrayList<Integer>();
+		int n = vertices.size();
+		Double [][] matrizRetorno = new Double [n][n];
+		Arista<T> aristaAux = new Arista<T>();
+		int i = 0;
+		int j = 0;
+		for(Entry<Integer, Vertice<T>> verticeOrigen : vertices.entrySet()) {
+			j = 0;
+			identificadores.add(verticeOrigen.getValue().getIdentificador());
+			for(Entry<Integer, Vertice<T>> verticeDestino : vertices.entrySet()) {
+				aristaAux = obtenerArista(verticeOrigen.getValue().getIdentificador(),verticeDestino.getValue().getIdentificador());
+				if(aristaAux != null) {
+					matrizRetorno[i][j] = (double) aristaAux.getCosto();
+				}else if(i == j) {
+					matrizRetorno[i][j] = (double) 0;
+				}else {
+					matrizRetorno[i][j] = (double) Double.POSITIVE_INFINITY;
+				}
+				j++;
+			}
+			i++;
+		}
+		System.out.println(" ");
+		for(i = 0; i < n; i++) {
+			System.out.print( "id " + identificadores.get(i)+ ":    ");
+			for(j = 0; j < n; j++) {
+				if(matrizRetorno[i][j] != INF) {
+					System.out.print(matrizRetorno[i][j] + "         ");
+				}else {
+					System.out.print("INF" + "         ");
+				}
+			}
+			System.out.println(" ");
+			System.out.println(" ");
+		}
+		
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+	}
 }
