@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
+import CambioMoneda.GrafoCambioDeMoneda;
 import Grafos.Arista;
 import Grafos.Grafo;
 import Grafos.LimiteException;
@@ -82,6 +83,7 @@ public class TestTallerGrafos {
 		System.out.println ("Punto 1: Clase abstracta Grafo con todos los métodos vistos en clase.  Al menos deben estar presentes: dfs, bfs, dijkstra, floydWarshall, bellmanFord, kruskal, prim.");
 		List<Nodo<String>> res;
 		System.out.println ("-------DFS-------");
+		pruebaDFS();
 		System.out.println ();
 		res = g.DFS(0);
 		for (Nodo<String> x : res)  {
@@ -90,6 +92,7 @@ public class TestTallerGrafos {
 		System.out.println ();
 
 		System.out.println ("-------BFS-------");
+		pruebaBFS();
 		System.out.println ();
 		res = g.BFS(2);
 		for (Nodo<String> x : res)  {
@@ -179,7 +182,8 @@ public class TestTallerGrafos {
 		System.out.println ();
 		System.out.println ("4.3 Arbitraje en cambio de monedas. Elabore un programa que, utilizando un grafo en el cual los vértices son monedas y las aristas sus tasas de cambio, calcule la mejor manera de cambiar una moneda a todas las otras.  Elabore otro programa que determine si existe una forma de obtener ganancias iniciando y terminando en una misma moneda.");
 		System.out.println ();
-
+		
+		
 		System.out.println ();
 		System.out.println ("4.4 En un grafo dirigido, su programa debe determinar si hay un vértice desde donde se puede llegar a todos los demás.");
 		System.out.println ();
