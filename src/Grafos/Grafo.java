@@ -392,6 +392,10 @@ public abstract class Grafo <T>{
 		}
 		return null;
 	}
+	
+	public Vertice<T> obtenerVertice(int identificador) {
+		return this.vertices.get(identificador);
+	}
 
 	public abstract void imprimirGrafo();
 }
