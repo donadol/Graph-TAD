@@ -93,6 +93,7 @@ public class GrafoRecipientes extends GrafoMatriz<EstadoRecipientes>{
 		List<Vertice<EstadoRecipientes>> camino = this.construirSecuencia();
 		if(camino!=null) {
 			Collections.reverse(camino);
+			System.out.println("A B C");
 			for(Vertice<EstadoRecipientes> n: camino) {
 				System.out.println(n.getContenido().toString());
 			}

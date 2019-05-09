@@ -11,6 +11,7 @@ import Grafos.Grafo;
 import Grafos.LimiteException;
 import Grafos.Nodo;
 import Grafos.Vertice;
+import Recipientes.GrafoRecipientes;
 import TigreBurroPaja.EstadoTigreBurroPaja;
 import TigreBurroPaja.GrafoTigreBurroPaja;
 
@@ -85,18 +86,20 @@ public class TestTallerGrafos {
 		System.out.println ("-------DFS-------");
 		res = g.DFS(0);
 		for (Nodo<String> x : res)  {
-			System.out.println(x.getV().getIdentificador());
+			System.out.print(x.getV().getIdentificador()+" ");
 		}
+		System.out.println ();
 		System.out.println ();
 
 		System.out.println ("-------BFS-------");
 		System.out.println ();
 		res = g.BFS(2);
 		for (Nodo<String> x : res)  {
-			System.out.println(x.getV().getIdentificador());
+			System.out.print(x.getV().getIdentificador()+" ");
 		}
 		System.out.println ();
-
+		System.out.println ();
+		
 		System.out.println ("-------Dijkstra-------");
 		System.out.println ();
 		//Resultado de Dijkstra (caminos más cortos) al grafo creado: https://www.geeksforgeeks.org/wp-content/uploads/DIJ5.jpg
@@ -173,7 +176,8 @@ public class TestTallerGrafos {
 		System.out.println ();
 
 		System.out.println ("4.2 Elabore un programa que, utilizando un grafo, resuelva la siguiente pregunta: Tenemos tres recipientes, de 4 l, 7 l y 10 l de capacidad.  Los dos primeros están llenos de agua y el tercero, vacío.  ¿Existe alguna secuencia de movimientos de líquido que deje 2 l en alguno de los dos primeros recipientes sin derramar agua?");
-		
+		GrafoRecipientes grafoRecipientes = new GrafoRecipientes();
+		grafoRecipientes.imprimirSecuencia();
 		System.out.println ();
 
 		System.out.println ();
