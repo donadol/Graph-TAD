@@ -118,7 +118,7 @@ public class EstadoTigreBurroPaja implements Cloneable{
 			estado += " "+ elementoA;
 		
 		
-		estado += " |     | ";
+		estado += " |▒▒▒▒▒| ";
 		
 		if (ladoBarca == 'B') 
 			estado += "Barca";
