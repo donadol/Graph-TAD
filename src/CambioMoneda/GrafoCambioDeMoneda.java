@@ -1,17 +1,16 @@
-package Grafos;
+package CambioMoneda;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import GrafoMatriz.GrafoMatriz;
+import Grafos.Vertice;
 
+public class GrafoCambioDeMoneda extends GrafoMatriz<Integer>{
 
-public class GrafoCambioDeMoneda<Integer> extends GrafoMatriz<Integer>{
-
-	public GrafoCambioDeMoneda() {
-		// TODO Auto-generated constructor stub
-	}
+	public GrafoCambioDeMoneda() {}
 	
-	public GrafoCambioDeMoneda<Integer> CambioDeMoneda(GrafoCambioDeMoneda graph, Vertice<Integer> inicial) {
+	public GrafoCambioDeMoneda CambioDeMoneda(GrafoCambioDeMoneda graph, Vertice<Integer> inicial) {
 		inicial.setDistancia(0);
 
 		List<Vertice<Integer>> nodosAgregados = new ArrayList<>();

@@ -1,9 +1,12 @@
-package Grafos;
+package TigreBurroPaja;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+
+import GrafoListaVecinos.GrafoListaVecinos;
+import Grafos.Vertice;
 
 public class GrafoTigreBurroPaja extends GrafoListaVecinos<EstadoTigreBurroPaja> {
 
@@ -13,7 +16,6 @@ public class GrafoTigreBurroPaja extends GrafoListaVecinos<EstadoTigreBurroPaja>
 	private List<Integer> identificadoresSolucion;
 
 	public GrafoTigreBurroPaja() throws CloneNotSupportedException {
-		// TODO Auto-generated constructor stub
 		identificadoresSolucion = new ArrayList<Integer>();
 		inicializarGrafo();
 		
@@ -57,17 +59,11 @@ public class GrafoTigreBurroPaja extends GrafoListaVecinos<EstadoTigreBurroPaja>
 
 				//sí el estado conduce a una solución
 				if (estadoNuevo.getTipoEstado() == 1) {
-
-					
-
 					if (estado.getContenido().getEstadoAnterior() == null) {
-						identificadorNuevo = this.agregarVertice(estadoNuevo);
-						Vertice<EstadoTigreBurroPaja> nuevoVertice = obtenerVertice(identificadorNuevo);			
+						identificadorNuevo = this.agregarVertice(estadoNuevo);		
 						this.agregarArista(estado.getIdentificador(), identificadorNuevo, 1);
 						colaEstados.add(obtenerVertice(identificadorNuevo));	
 					}
-
-
 					else {
 
 						if(!estado.getContenido().getEstadoAnterior().igual(estadoNuevo)) {
@@ -85,17 +81,14 @@ public class GrafoTigreBurroPaja extends GrafoListaVecinos<EstadoTigreBurroPaja>
 								}
 								else {
 
-									identificadorNuevo = this.agregarVertice(estadoNuevo);
-									Vertice<EstadoTigreBurroPaja> nuevoVertice = obtenerVertice(identificadorNuevo);			
+									identificadorNuevo = this.agregarVertice(estadoNuevo);		
 									this.agregarArista(estado.getIdentificador(), identificadorNuevo, 1);
 									colaEstados.add(obtenerVertice(identificadorNuevo));	
 								}
 							}
-
 							else {			
 
 								identificadorNuevo = this.agregarVertice(estadoNuevo);
-								Vertice<EstadoTigreBurroPaja> nuevoVertice = obtenerVertice(identificadorNuevo);			
 								this.agregarArista(estado.getIdentificador(), identificadorNuevo, 1);
 								colaEstados.add(obtenerVertice(identificadorNuevo));	
 							}

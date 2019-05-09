@@ -1,4 +1,4 @@
-package Grafos;
+package TigreBurroPaja;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -4,16 +4,38 @@ import java.util.*;
 import java.util.Map.Entry;
 
 public abstract class Grafo <T>{
-
 	protected static int INF = Integer.MAX_VALUE;
 	protected int NumeroVertices;
-	Map <Integer, Vertice<T>> vertices;
-
+	protected Map <Integer, Vertice<T>> vertices;
 
 	public Grafo() {
 		this.NumeroVertices = 0;
 		vertices = new HashMap <Integer, Vertice<T>> ();
+	}
 
+	public static int getINF() {
+		return INF;
+	}
+
+	public static void setINF(int iNF) {
+		INF = iNF;
+	}
+
+	public int getNumeroVertices() {
+		return NumeroVertices;
+	}
+
+	public void setNumeroVertices(int numeroVertices) {
+		NumeroVertices = numeroVertices;
+	}
+
+	public Map<Integer, Vertice<T>> getVertices() {
+		return vertices;
+	}
+
+
+	public void setVertices(Map<Integer, Vertice<T>> vertices) {
+		this.vertices = vertices;
 	}
 
 	public abstract int agregarVertice(T contenido);
@@ -287,6 +309,7 @@ public abstract class Grafo <T>{
 		}
 		return c;
 	}
+
 	public int[] BellmanFord(int verticeInicicial) { 
 		ArrayList<Arista<T>> listaAristas = new ArrayList<Arista<T>>();
 		listaAristas = (ArrayList<Arista<T>>) obtenerAristas();
@@ -395,10 +418,96 @@ public abstract class Grafo <T>{
 		}
 		return null;
 	}
-	
+
 	public Vertice<T> obtenerVertice(int identificador) {
 		return this.vertices.get(identificador);
 	}
 
-	public abstract void imprimirGrafo();
+	//imprimirGrafo imprime el grafo para poder verlo deuna forma mas visual
+	public void imprimirGrafo() {
+
+		ArrayList<Integer> identificadores = new ArrayList<Integer>();
+		int n = vertices.size();
+		Double [][] matrizRetorno = new Double [n][n];
+		Arista<T> aristaAux = new Arista<T>();
+		int i = 0;
+		int j = 0;
+		for(Entry<Integer, Vertice<T>> verticeOrigen : vertices.entrySet()) {
+			j = 0;
+			identificadores.add(verticeOrigen.getValue().getIdentificador());
+			for(Entry<Integer, Vertice<T>> verticeDestino : vertices.entrySet()) {
+				aristaAux = obtenerArista(verticeOrigen.getValue().getIdentificador(),verticeDestino.getValue().getIdentificador());
+				if(aristaAux != null) {
+					matrizRetorno[i][j] = (double) aristaAux.getCosto();
+				}else if(i == j) {
+					matrizRetorno[i][j] = (double) 0;
+				}else {
+					matrizRetorno[i][j] = (double) Double.POSITIVE_INFINITY;
+				}
+				j++;
+			}
+			i++;
+		}
+		System.out.println(" ");
+		for(i = 0; i < n; i++) {
+			System.out.print( "id " + identificadores.get(i)+ ":    ");
+			for(j = 0; j < n; j++) {
+				if(matrizRetorno[i][j] != INF) {
+					System.out.print(matrizRetorno[i][j] + "         ");
+				}else {
+					System.out.print("INF" + "         ");
+				}
+			}
+			System.out.println(" ");
+			System.out.println(" ");
+		}
+
+		System.out.println(" ");
+		System.out.println(" ");
+		System.out.println(" ");
+	}
+
+	//arbolDeMinimaExpancionConVerticesHojas sirve para armar un MST cuyas ojas deben contener unos vertices indicados prevaimente
+	public List<Arista<T>> arbolDeMinimaExpancionConVerticesHojas(ArrayList<Vertice<T>> subSet){
+		ArrayList<Arista<T>> aristas = new ArrayList<Arista<T>>();
+		ArrayList<Arista<T>> aristas2 = new ArrayList<Arista<T>>();
+		aristas = (ArrayList<Arista<T>>) obtenerAristas();
+		aristas2 = (ArrayList<Arista<T>>) obtenerAristas();
+		for(Arista<T> a : aristas) {
+			if(existeVerticeEnSubset(a.getOrigen().getIdentificador(), subSet)) {
+				aristas2.remove(a);
+			}
+		}
+		return MST(aristas2);
+	}	
+
+	public List<Arista<T>> MST(List<Arista<T>> aristas) {
+		List<Arista<T>> results = new ArrayList<Arista<T>>();
+		int e=0, i=0;
+		Collections.sort(aristas);
+		Subset subsets[] = new Subset[vertices.size()];
+		for(int v=0; v<vertices.size(); ++v) {
+			subsets[v] = new Subset(v,0);
+		}
+		while(e<vertices.size()-1) {
+			Arista<T> next = aristas.get(i);
+			i++;
+			int x = find(subsets, next.getOrigen().getIdentificador());
+			int y = find(subsets, next.getDestino().getIdentificador());
+			if(x!=y) {
+				results.add(next);
+				union(subsets, x, y);
+				e++;
+			}	
+		}
+		return results;
+	}
+
+	public boolean existeVerticeEnSubset(int indicadorABuscar, ArrayList<Vertice<T>> subSet){
+		for(Vertice<T> v : subSet) {
+			if(indicadorABuscar == v.getIdentificador())
+				return true;	
+		}
+		return false;
+	}
 }

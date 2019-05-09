@@ -6,12 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import Grafos.Arista;
-import Grafos.EstadoTigreBurroPaja;
 import Grafos.Grafo;
-import Grafos.GrafoTigreBurroPaja;
-import Grafos.GrafosPrueba;
 import Grafos.LimiteException;
+import Grafos.Nodo;
 import Grafos.Vertice;
+import TigreBurroPaja.EstadoTigreBurroPaja;
+import TigreBurroPaja.GrafoTigreBurroPaja;
 
 public class TestTallerGrafos {
 
@@ -20,12 +20,7 @@ public class TestTallerGrafos {
 	}
 
 	public static void main(String[] args) throws LimiteException, CloneNotSupportedException {
-		// TODO Auto-generated method stub
-		
 		probarPunto1();
-
-
-
 	}
 
 	private static <T> void probarPunto1() throws LimiteException, CloneNotSupportedException {
@@ -241,7 +236,42 @@ public class TestTallerGrafos {
 			
 		}
 	}
-
-
-
+	
+	static public void pruebaBFS() {
+		Grafo<String> g = new TestGrafoMatriz<String>();
+		g.agregarVertice("0");
+		g.agregarVertice("1");
+		g.agregarVertice("2"); //1
+		g.agregarVertice("3"); //2
+		g.agregarArista(0, 1, 1);
+		g.agregarArista(0, 2, 1);
+		g.agregarArista(1, 2, 1);
+		g.agregarArista(2, 0, 1);
+		g.agregarArista(2, 3, 1);
+		g.agregarArista(3, 3, 1);
+		
+		List<Nodo<String>> res = g.BFS(2);
+		for (Nodo<String> x : res)  {
+			System.out.println(x.getV().getIdentificador());
+		}
+	}
+	
+	static public void pruebaDFS() {
+		Grafo<String> g = new TestGrafoMatriz<String>();
+		g.agregarVertice("0");
+		g.agregarVertice("1");
+		g.agregarVertice("2");
+		g.agregarVertice("3"); 
+		g.agregarVertice("4"); 
+		g.agregarArista(1, 0, 1);
+		g.agregarArista(0, 2, 1);
+		g.agregarArista(2, 1, 1);
+		g.agregarArista(0, 3, 1);
+		g.agregarArista(1, 4, 1);
+		
+		List<Nodo<String>> res = g.DFS(0);
+		for (Nodo<String> x : res)  {
+			System.out.println(x.getV().getIdentificador());
+		}
+	}
 }

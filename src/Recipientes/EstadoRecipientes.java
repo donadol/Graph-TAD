@@ -1,4 +1,4 @@
-package Grafos;
+package Recipientes;
 
 public class EstadoRecipientes {
 	private int a, b, c;

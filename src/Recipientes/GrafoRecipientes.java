@@ -1,6 +1,10 @@
-package Grafos;
+package Recipientes;
 
 import java.util.*;
+
+import GrafoMatriz.GrafoMatriz;
+import Grafos.Nodo;
+import Grafos.Vertice;
 
 public class GrafoRecipientes extends GrafoMatriz<EstadoRecipientes>{
 	

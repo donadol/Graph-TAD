@@ -1,7 +1,10 @@
-package Grafos;
+package GrafoListaVecinos;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import Grafos.Arista;
+import Grafos.Vertice;
 
 public class VerticeVecinos<T> extends Vertice<T> {
 	private List<Arista <T>> vecinos;

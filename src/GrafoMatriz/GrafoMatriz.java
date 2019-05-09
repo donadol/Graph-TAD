@@ -1,7 +1,10 @@
-package Grafos;
+package GrafoMatriz;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+
+import Grafos.Arista;
+import Grafos.Grafo;
+import Grafos.Vertice;
 
 public abstract class GrafoMatriz<T> extends Grafo<T>{
 
