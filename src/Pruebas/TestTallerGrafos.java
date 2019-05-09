@@ -180,6 +180,37 @@ public class TestTallerGrafos {
 		System.out.println ("4.3 Arbitraje en cambio de monedas. Elabore un programa que, utilizando un grafo en el cual los vértices son monedas y las aristas sus tasas de cambio, calcule la mejor manera de cambiar una moneda a todas las otras.  Elabore otro programa que determine si existe una forma de obtener ganancias iniciando y terminando en una misma moneda.");
 		System.out.println ();
 		
+		GrafoCambioDeMoneda grafoCambioDeMoneda = new GrafoCambioDeMoneda();
+		int inicial = grafoCambioDeMoneda.agregarVertice("0");//Peso Colombiano
+		grafoCambioDeMoneda.agregarVertice("1");//Peso Chileno
+		grafoCambioDeMoneda.agregarVertice("2");//Dólar
+		grafoCambioDeMoneda.agregarVertice("3");//Euro
+		grafoCambioDeMoneda.agregarVertice("4");//Dirham
+		grafoCambioDeMoneda.agregarVertice("5");//Dólar Canadiense
+		grafoCambioDeMoneda.agregarVertice("6");//Yen
+		grafoCambioDeMoneda.agregarVertice("7");//Peso Argentino
+		grafoCambioDeMoneda.agregarVertice("8");//Real
+		
+		grafoCambioDeMoneda.agregarArista(1, 0, 4000);
+		grafoCambioDeMoneda.agregarArista(0, 1, 40);
+		grafoCambioDeMoneda.agregarArista(2, 0, 3300);
+		grafoCambioDeMoneda.agregarArista(0, 2, 33);
+		grafoCambioDeMoneda.agregarArista(3, 0, 3500);
+		grafoCambioDeMoneda.agregarArista(0, 3, 35);
+		grafoCambioDeMoneda.agregarArista(3, 5, 1500);
+		grafoCambioDeMoneda.agregarArista(5, 3, 15);
+		grafoCambioDeMoneda.agregarArista(2, 4, 3670);
+		grafoCambioDeMoneda.agregarArista(4, 2, 36);
+		grafoCambioDeMoneda.agregarArista(1, 6, 62);
+		grafoCambioDeMoneda.agregarArista(6, 1, 6270);
+		grafoCambioDeMoneda.agregarArista(5, 7, 3362);
+		grafoCambioDeMoneda.agregarArista(7, 5, 33);
+		grafoCambioDeMoneda.agregarArista(4, 8, 1080);
+		grafoCambioDeMoneda.agregarArista(8, 4, 93);
+		
+		
+		grafoCambioDeMoneda = grafoCambioDeMoneda.CambioDeMoneda(grafoCambioDeMoneda, grafoCambioDeMoneda.obtenerVertice(inicial));
+		
 		
 		System.out.println ();
 		System.out.println ("4.4 En un grafo dirigido, su programa debe determinar si hay un vértice desde donde se puede llegar a todos los demás.");
