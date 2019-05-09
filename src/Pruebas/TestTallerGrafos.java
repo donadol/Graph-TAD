@@ -83,8 +83,6 @@ public class TestTallerGrafos {
 		System.out.println ("Punto 1: Clase abstracta Grafo con todos los métodos vistos en clase.  Al menos deben estar presentes: dfs, bfs, dijkstra, floydWarshall, bellmanFord, kruskal, prim.");
 		List<Nodo<String>> res;
 		System.out.println ("-------DFS-------");
-		pruebaDFS();
-		System.out.println ();
 		res = g.DFS(0);
 		for (Nodo<String> x : res)  {
 			System.out.println(x.getV().getIdentificador());
@@ -92,7 +90,6 @@ public class TestTallerGrafos {
 		System.out.println ();
 
 		System.out.println ("-------BFS-------");
-		pruebaBFS();
 		System.out.println ();
 		res = g.BFS(2);
 		for (Nodo<String> x : res)  {
