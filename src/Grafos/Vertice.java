@@ -10,7 +10,7 @@ public class Vertice <T>{
 	private int distancia;
 	//Representa la lista de aristas que tiene este vértice
 	private List<Arista <T>> vecinos;
-	private List<Arista<T>> menorDistancia;
+	private List<Vertice<T>> menorDistancia;
 	
 	public Vertice(){}
 	public Vertice(T contenido, int id){
@@ -48,12 +48,12 @@ public class Vertice <T>{
 	public void setVecinos(List<Arista<T>> vecinos) {
 		this.vecinos = vecinos;
 	}
-	public void setMenorDistancia(List<Arista<T>> menorDistancia) {
+	public void setMenorDistancia(List<Vertice<T>> menorDistancia) {
 		this.menorDistancia = menorDistancia;
 		// TODO Auto-generated method stub
 		
 	}
-	public List<Arista<T>> getMenorDistancia() {
+	public List<Vertice<T>> getMenorDistancia() {
 		// TODO Auto-generated method stub
 		return menorDistancia;
 	}

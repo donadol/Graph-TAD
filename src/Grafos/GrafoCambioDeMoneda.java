@@ -4,29 +4,33 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class GrafoCambioDeMoneda<T> extends GrafoMatriz<T>{
+
+public class GrafoCambioDeMoneda<Integer> extends GrafoMatriz<Integer>{
 
 	public GrafoCambioDeMoneda() {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public static GrafoCambioDeMoneda CambioDeMoneda(GrafoCambioDeMoneda graph, Vertice inicial) {
+	public GrafoCambioDeMoneda<Integer> CambioDeMoneda(GrafoCambioDeMoneda graph, Vertice<Integer> inicial) {
 		inicial.setDistancia(0);
 
-		List<Vertice> nodosAgregados = new ArrayList<>();
-		List<Vertice> nodosNoAgregados = new ArrayList<>();
+		List<Vertice<Integer>> nodosAgregados = new ArrayList<>();
+		List<Vertice<Integer>> nodosNoAgregados = new ArrayList<>();
+		List<Vertice<Integer>> listaAuxiliar = new ArrayList<>();
 
 		nodosNoAgregados.add(inicial);
 
 		while (nodosNoAgregados.size() != 0) {
-			Vertice verticeActual = getMenorDistanciaNodoCambioDeMoneda(nodosNoAgregados);
+			Vertice<Integer> verticeActual = getMenorDistanciaNodoCambioDeMoneda(nodosNoAgregados);
 			nodosNoAgregados.remove(verticeActual);
-			for (Vertice conexionActual : verticeActual.getVecinos()) {
-				int conexionPeso = conexionActual.getIdentificador();
-				if (!nodosAgregados.contains(conexionActual)) {
-					MinimaDistanciaCambioDeMoneda(conexionActual, conexionPeso, verticeActual);
-					if (!nodosNoAgregados.contains(conexionActual)) {
-						nodosNoAgregados.add(conexionActual);
+			listaAuxiliar = graph.obtenerVecinos(verticeActual);
+			for(int i = 0; i < listaAuxiliar.size(); i++)
+			{
+				int conexionPeso = listaAuxiliar.get(i).getIdentificador();
+				if (!nodosAgregados.contains(listaAuxiliar.get(i))) {
+					MinimaDistanciaCambioDeMoneda(listaAuxiliar.get(i), conexionPeso, verticeActual);
+					if (!nodosNoAgregados.contains(listaAuxiliar.get(i))) {
+						nodosNoAgregados.add(listaAuxiliar.get(i));
 					}
 				}
 			}
@@ -35,10 +39,10 @@ public class GrafoCambioDeMoneda<T> extends GrafoMatriz<T>{
 		return graph;
 	}
 
-	private static Vertice getMenorDistanciaNodoCambioDeMoneda(List<Vertice> nodosNoAgregados) {
-		Vertice menorDistanciaNodo = null;
-		int menorDistancia = Integer.MAX_VALUE;
-		for (Vertice nodo : nodosNoAgregados) {
+	private Vertice<Integer> getMenorDistanciaNodoCambioDeMoneda(List<Vertice<Integer>> nodosNoAgregados) {
+		Vertice<Integer> menorDistanciaNodo = null;
+		int menorDistancia = 99999999;
+		for (Vertice<Integer> nodo : nodosNoAgregados) {
 			int distanciaNodo = nodo.getDistancia();
 			if (distanciaNodo < menorDistancia) {
 				menorDistancia = distanciaNodo;
@@ -48,11 +52,11 @@ public class GrafoCambioDeMoneda<T> extends GrafoMatriz<T>{
 		return menorDistanciaNodo;
 	}
 
-	private static void MinimaDistanciaCambioDeMoneda(Vertice nodoAEvaluar, int peso, Vertice verticeActual) {
+	private void MinimaDistanciaCambioDeMoneda(Vertice<Integer> nodoAEvaluar, int peso, Vertice<Integer> verticeActual) {
 		int nodoActualDistancia = verticeActual.getDistancia();
 		if (nodoActualDistancia + peso < nodoAEvaluar.getDistancia()) {
 			nodoAEvaluar.setDistancia(nodoActualDistancia + peso);
-			List<Vertice> menorDistancia = verticeActual.getMenorDistancia();
+			List<Vertice<Integer>> menorDistancia = verticeActual.getMenorDistancia();
 			menorDistancia.add(verticeActual);
 			nodoAEvaluar.setMenorDistancia(menorDistancia);
 		}
