@@ -43,16 +43,16 @@ public abstract class Grafo <T>{
 	public abstract List<Arista<T>> obtenerAristasVertice (int identificador);
 	public abstract List<Arista<T>> obtenerAristasVertice (Vertice<T> vertice);
 
-	public Map<Integer, Vertice<T>> BFS(int s){
+	public List<Vertice<T>> BFS(int s){
 		Vertice<T> v;
-		Map <Integer, Vertice<T>> mapa = new HashMap <Integer, Vertice<T>>();
+		List<Vertice<T>> res = new ArrayList <Vertice<T>>();
 		reiniciarMarcas();
 		Queue<Vertice<T>> cola = new LinkedList<Vertice<T>>();
 		this.vertices.get(s).setMarcado(true);
 		cola.add(this.vertices.get(s));
 		while (cola.size() != 0){
 			v = cola.poll();
-			mapa.put(v.getIdentificador(), v);
+			res.add(v);
 			for (Vertice<T> u : this.obtenerVecinos(v)){
 				if (!u.isMarcado()){
 					u.setMarcado(true);
@@ -60,7 +60,7 @@ public abstract class Grafo <T>{
 				}
 			}
 		}
-		return mapa;
+		return res;
 	}
 
 	public List<Vertice<T>> DFS(int s) {
