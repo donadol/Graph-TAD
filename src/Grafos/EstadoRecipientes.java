@@ -27,4 +27,7 @@ public class EstadoRecipientes {
 	public void setC(int c) {
 		this.c = c;
 	}
+	public String toString() {
+		return this.a+" "+this.b+" "+this.c;
+	}
 }

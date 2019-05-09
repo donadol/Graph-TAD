@@ -43,42 +43,45 @@ public abstract class Grafo <T>{
 	public abstract List<Arista<T>> obtenerAristasVertice (int identificador);
 	public abstract List<Arista<T>> obtenerAristasVertice (Vertice<T> vertice);
 
-	public List<Vertice<T>> BFS(int s){
+	public List<Nodo<T>> BFS(int s){
 		Vertice<T> v;
-		List<Vertice<T>> res = new ArrayList <Vertice<T>>();
+		List<Nodo<T>> res = new ArrayList <Nodo<T>>();
 		reiniciarMarcas();
 		Queue<Vertice<T>> cola = new LinkedList<Vertice<T>>();
 		this.vertices.get(s).setMarcado(true);
 		cola.add(this.vertices.get(s));
+		res.add(new Nodo<T>(s,this.vertices.get(s)));
 		while (cola.size() != 0){
 			v = cola.poll();
-			res.add(v);
 			for (Vertice<T> u : this.obtenerVecinos(v)){
 				if (!u.isMarcado()){
 					u.setMarcado(true);
 					cola.add(u);
+					res.add(new Nodo<T>(v.getIdentificador(),u));
 				}
 			}
 		}
 		return res;
 	}
 
-	public List<Vertice<T>> DFS(int s) {
+	public List<Nodo<T>> DFS(int s) {
 		Vertice<T> v;
 		this.reiniciarMarcas();
 		Stack<Vertice<T>> stack = new Stack<Vertice<T>>();
-		List<Vertice<T>> res = new ArrayList <Vertice<T>>();
+		List<Nodo<T>> res = new ArrayList <Nodo<T>>();
 		stack.push(this.vertices.get(s));
+		res.add(new Nodo<T>(s,this.vertices.get(s)));
 		while(!stack.empty()) {
 			v=stack.peek();
 			stack.pop();
 			if(!v.isMarcado()) {
-				res.add(v);
 				v.setMarcado(true);
 			}
 			for(Vertice<T> u: this.obtenerVecinos(v)) {
-				if (!u.isMarcado())
+				if (!u.isMarcado()) {
 					stack.push(u);
+					res.add(new Nodo<T>(v.getIdentificador(),u));
+				}
 			}
 		}
 		return res;

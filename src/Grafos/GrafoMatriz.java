@@ -28,7 +28,6 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 		for(int i = 0; i < matrizDeAdyacencia.size(); i++)
 			for(int j = 0; j < matrizDeAdyacencia.get(matrizDeAdyacencia.size() - 1).size() -  matrizDeAdyacencia.get(i).size(); j++)
 				matrizDeAdyacencia.get(i).add(INF);
-		
 		nodosVisitados.add(false);
 		cantArcos++;
 		Vertice <T> verticeNuevo = new Vertice<T>(contenido, NumeroVertices);
@@ -39,10 +38,7 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 		
 	}
 	public int eliminarVertice(int identificador) {
-		
-		
 		if(existeVertice(identificador)) {
-			
 			int posicion = existeVertice2(identificador);
 			vertices.remove(identificador);
 			matrizDeAdyacencia.remove(posicion);
@@ -58,10 +54,7 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 	}
 
 	public boolean agregarArista (int origen, int destino, int costo) {
-		
-		
 		if(existeVertice(origen) && existeVertice(destino)){
-			
 			int posOrigen = existeVertice2(origen);
 			int posDestino = existeVertice2(destino);
 			matrizDeAdyacencia.get(posOrigen).set(posDestino,  costo);
@@ -69,11 +62,10 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 			return true;
 		}else {
 			return false;
-		}
-		
+		}	
 	}
+	
 	public boolean eliminarArista (int origen, int destino) {
-		
 		int posOrigen = existeVertice2(origen);
 		int posDestino = existeVertice2(destino);
 		if(matrizDeAdyacencia.size() > 0) {
@@ -90,11 +82,9 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 			}
 		}
 		return false;
-		
 	}
 
 	public List<Vertice<T>> obtenerVecinos (int identificador){
-		
 		ArrayList <Vertice<T>> listaSalida = new ArrayList<Vertice<T>>();
 		if(existeVertice(identificador)) {
 			int i = 0;
@@ -107,10 +97,9 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 			return listaSalida;
 		}
 		return null;
-		
 	}
-	public List<Vertice<T>> obtenerVecinos (Vertice <T> vertice){
-		
+	
+	public List<Vertice<T>> obtenerVecinos (Vertice <T> vertice){	
 		int identificador = vertice.getIdentificador();
 		ArrayList <Vertice<T>> listaSalida = new ArrayList<Vertice<T>>();
 		if(existeVertice(identificador)) {
@@ -127,7 +116,6 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 	}
 
 	public List<Arista<T>> obtenerAristas (){
-		
 		ArrayList<Arista<T>> listaSalida = new ArrayList<Arista<T>>();
 		int i = 0;
 		int j = 0;
@@ -140,13 +128,11 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 					aristaAux.setDestino(vertices.get(identificadores.get(j)));
 					aristaAux.setCosto(e);
 					listaSalida.add(aristaAux);
-					
 				}
 				j++;
 			}
 			i++;
 		}
-		
 		return listaSalida;
 	}
 
@@ -156,21 +142,19 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 		if(existeVertice(posOrigen) && existeVertice(posDestino)) {
 			return matrizDeAdyacencia.get(posOrigen).get(posDestino);
 		}
-		
 		return INF;
 	}
+	
 	public int obtenerCostoArista (Vertice <T> origen, Vertice <T> destino) {
 		int posOrigen = existeVertice2(origen.getIdentificador());
 		int posDestino = existeVertice2(destino.getIdentificador());
 		if(existeVertice(posOrigen) && existeVertice(posDestino)) {
 			return matrizDeAdyacencia.get(posOrigen).get(posDestino);
 		}
-		
 		return INF;
 	}
 	
 	public boolean existeVertice(int idVertice) {
-		
 		for(Integer i : identificadores) {
 			if(i == idVertice)
 				return true;
@@ -179,7 +163,6 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 	}
 	
 	public int existeVertice2(int idVertice) {
-		
 		int j = 0;
 		for(Integer i : identificadores) {
 			if(i == idVertice)
@@ -194,8 +177,7 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 		for(ArrayList< Integer> n : matrizDeAdyacencia) {
 			System.out.print( "id " + identificadores.get(i)+ ":   ");
 			for(int m : n) {
-					System.out.print(m + "             ");
-				
+					System.out.print(m + "\t");
 			}
 			System.out.print("\n");
 			System.out.print("\n");
@@ -205,7 +187,6 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 	}
 	
 	public Arista<T> obtenerArista (int origen, int destino){
-		
 		ArrayList<Arista<T>> listaAux = new ArrayList<Arista<T>>();
 		listaAux = (ArrayList<Arista<T>>) obtenerAristas();
 		for(Arista<T> a : listaAux) {
@@ -214,16 +195,13 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 			}
 		}
 		return null;
-
 	}
 	public Arista<T> obtenerArista (Vertice<T> origen, Vertice<T> destino){
 		
 		return obtenerArista(origen.getIdentificador(), destino.getIdentificador() );
 	}
 	
-	
-	public List<Arista<T>> obtenerAristasVertice (int identificador){
-		
+	public List<Arista<T>> obtenerAristasVertice (int identificador){	
 		ArrayList<Arista<T>> listaAux = new ArrayList<Arista<T>>();
 		ArrayList<Arista<T>> listaSalida = new ArrayList<Arista<T>>();
 		listaAux = (ArrayList<Arista<T>>) obtenerAristas();
@@ -234,9 +212,8 @@ public abstract class GrafoMatriz<T> extends Grafo<T>{
 		}
 		return listaSalida;
 	}
-	public List<Arista<T>> obtenerAristasVertice (Vertice<T> vertice){
-		
+	
+	public List<Arista<T>> obtenerAristasVertice (Vertice<T> vertice){	
 		return obtenerAristasVertice(vertice.getIdentificador());
 	}
-
 }
