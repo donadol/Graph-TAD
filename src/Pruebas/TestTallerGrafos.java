@@ -83,6 +83,8 @@ public class TestTallerGrafos {
 	private static <T> void probarPunto1(Grafo<String>g) throws LimiteException {
 		System.out.println ("Punto 1: Clase abstracta Grafo con todos los métodos vistos en clase.  Al menos deben estar presentes: dfs, bfs, dijkstra, floydWarshall, bellmanFord, kruskal, prim.");
 		List<Nodo<String>> res;
+		
+		
 		System.out.println ("-------DFS-------");
 		res = g.DFS(0);
 		for (Nodo<String> x : res)  {
@@ -90,6 +92,9 @@ public class TestTallerGrafos {
 		}
 		System.out.println ();
 		System.out.println ();
+		
+		
+		
 
 		System.out.println ("-------BFS-------");
 		System.out.println ();
@@ -99,6 +104,9 @@ public class TestTallerGrafos {
 		}
 		System.out.println ();
 		System.out.println ();
+		
+		
+		
 		
 		System.out.println ("-------Dijkstra-------");
 		System.out.println ();
@@ -111,27 +119,46 @@ public class TestTallerGrafos {
 		construirCaminoDijkstra(g, resultadoDijkstra, 8, "Camino más corto desde vertice 0 hasta vertice 8");	
 
 		System.out.println ();
+		
+		
+		
 
 		System.out.println ("-------Floyd Warshall-------");
 		System.out.println ();
-		g.FloydWarshall();
+		int n = g.getVertices().size();
+		Double[][] matrizAux = new Double [n][n];
+		matrizAux = g.FloydWarshall();
+		for(int i = 0; i < n; i++) {
+			for(int j = 0; j < n; j++) {
+				if(matrizAux[i][j] != Integer.MAX_VALUE)
+					System.out.print(matrizAux[i][j]  +"    ");
+				else
+					System.out.print("INF"  +"    ");
+			}
+			System.out.print("\n");
+		}
 		System.out.println ();
+		
+		
 
 		System.out.println ("-------Bellman Ford-------");
 		System.out.println ();
 		for(int i = 0; i < 9; i++)
-			System.out.println("valor "+ i + " es de " +g.BellmanFord(1)[i]);
+			System.out.println("Vertice de id "+ g.getVertices().get(1).getIdentificador() + " y su costo a los demas vertices : " +g.BellmanFord(1)[i]);
 
-		//Árbol MST para grafo creado: https://www.geeksforgeeks.org/wp-content/uploads/MST5.jpg
+		
 		System.out.println ();
+		
+		
 
 		System.out.println ("-------Kruskal-------");
 		System.out.println ();
 		List<Arista<String>> MST;
 		MST = g.KruskalMST();
 		imprimirMST(MST, "MST con Kruskal");
-
 		System.out.println ();
+		
+		
 
 		System.out.println ("-------Prim-------");
 		System.out.println ();
@@ -140,6 +167,8 @@ public class TestTallerGrafos {
 		imprimirMST(MST, "MST con Prim");
 		System.out.println ();
 	}
+	
+	
 
 	public static <T> void probarPunto2(){
 		System.out.println ("Punto 2. Al menos tres implementaciones también abstractas del Grafo: una con matriz de adyacencias, otra con lista de vecinos por vértice y otra con lista de aristas.");
@@ -227,7 +256,23 @@ public class TestTallerGrafos {
 
 
 		System.out.println ("4.5 Dado un subconjunto de vértices de un grafo, calcule el árbol de cubrimiento más ligero donde todos los elementos del subconjunto son hojas.");
+		System.out.println ("(Se asume que en las hojas pueden ir mas vertices de los colocados en en el sub conjunto)");
+		
 		System.out.println ();
+		
+		ArrayList<Arista<T>> listaAux = new ArrayList<Arista<T>>(); 
+		ArrayList<Vertice<T>> subSet = new ArrayList<Vertice<T>>(); 
+		subSet.add(g.getVertices().get(1));
+		subSet.add(g.getVertices().get(3));
+		subSet.add(g.getVertices().get(5));
+		
+		listaAux = (ArrayList<Arista<T>>) g.arbolDeMinimaExpancionConVerticesHojas(subSet);
+		
+		System.out.println("Impresion del arbol:");
+		System.out.println ();
+		for(Arista<T> a : listaAux) {
+			System.out.println("Id vertice origen: " + a.getOrigen().getIdentificador() + ", Peso de la arista: "+ a.getCosto() + ", Id vertice destino: " + a.getDestino().getIdentificador());
+		}
 
 		System.out.println ();
 	}

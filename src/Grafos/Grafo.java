@@ -280,14 +280,6 @@ public abstract class Grafo <T>{
 			i++;
 		}
 
-		for( i = 0; i < n; i++) {
-			for( j = 0; j < n; j++) {
-				System.out.print(matrizRetorno[i][j]  +"    ");
-			}
-			System.out.print("\n");
-		}
-		System.out.print("\n");
-		System.out.print("\n");
 
 		i = 0;
 		j = 0;
@@ -301,12 +293,6 @@ public abstract class Grafo <T>{
 				for( j = 0; j < n; j ++)
 					c[i][j] = min( c[i][j], ( c[i][k] +  c[k][j]));
 
-		for( i = 0; i < n; i++) {
-			for( j = 0; j < n; j++) {
-				System.out.print(c[i][j]  +"    ");
-			}
-			System.out.print("\n");
-		}
 		return c;
 	}
 
